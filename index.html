@@ -1,1281 +1,1000 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASAT SBK Kelas 8 — Seni Budaya Interaktif</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        teal: { 50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',800:'#115e59',900:'#134e4a' },
-                        indigo: { 50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' }
-                    },
-                    fontFamily: { sans: ['Inter','system-ui','sans-serif'] }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.0/index.css" rel="stylesheet">
-    <style>
-        *{box-sizing:border-box}
-        body{font-family:'Inter',system-ui,sans-serif}
-        .tab-content{display:none;animation:fadeUp .4s ease}
-        .tab-content.active{display:block}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes popIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
-        @keyframes confetti{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-100px) rotate(720deg);opacity:0}}
-        @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-        @keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
-        .pop-in{animation:popIn .4s ease}
-        .shake{animation:shake .3s ease}
-        .bounce-in{animation:bounceIn .4s ease}
-        .flip-card{perspective:1000px}
-        .flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
-        .flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
-        .flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem}
-        .flip-card-back{transform:rotateY(180deg)}
-        .match-item{cursor:pointer;transition:all .2s;user-select:none}
-        .match-item.selected{ring:3px solid #6366f1;background-color:#e0e7ff;border-color:#6366f1}
-        .match-item.matched{background-color:#dcfce7;border-color:#22c55e;color:#166534;cursor:default;pointer-events:none}
-        .match-item.wrong{background-color:#fee2e2;border-color:#ef4444;animation:shake .3s}
-        .essay-answer{max-height:0;overflow:hidden;transition:max-height .5s ease,padding .3s ease}
-        .essay-answer.show{max-height:1200px;padding-top:1rem}
-        .progress-fill{transition:width .5s ease}
-        ::-webkit-scrollbar{width:6px}
-        ::-webkit-scrollbar-track{background:#f1f5f9}
-        ::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:3px}
-        .confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confetti 1s ease-out forwards}
-        .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:12px;font-weight:600}
-        .hover-lift{transition:transform .2s,box-shadow .2s}
-        .hover-lift:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.1)}
-        .quiz-option{transition:all .2s}
-        .quiz-option:hover:not(.disabled){transform:translateX(5px)}
-        .diagram-node{transition:all .3s}
-        .diagram-node:hover{transform:scale(1.05);box-shadow:0 8px 25px rgba(0,0,0,.15)}
-        .gradient-text{background:linear-gradient(135deg,#14b8a6,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .pgk-option{transition:all .2s;cursor:pointer;user-select:none}
-        .pgk-option:hover{background-color:#f0fdfa}
-        .pgk-option.selected{background-color:#e0e7ff;border-color:#6366f1}
-        .tf-option{transition:all .2s;cursor:pointer;user-select:none}
-        .tf-option:hover{background-color:#f8fafc}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASAT SBK Kelas 8 — Seni Budaya Interaktif</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{rose:{50:'#fff1f2',100:'#ffe4e6',200:'#fecdd3',300:'#fda4af',400:'#fb7185',500:'#f43f5e',600:'#e11d48',700:'#be123c',800:'#9f1239',900:'#881337'},indigo:{50:'#eef2ff',100:'#e0e7ff',200:'#c7d2fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81'},amber:{50:'#fffbeb',100:'#fef3c7',200:'#fde68a',300:'#fcd34d',400:'#fbbf24',500:'#f59e0b',600:'#d97706',700:'#b45309',800:'#92400e',900:'#78350f'},emerald:{50:'#ecfdf5',100:'#d1fae5',200:'#a7f3d0',300:'#6ee7b7',400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',800:'#065f46',900:'#064e3b'}},fontFamily:{sans:['Inter','system-ui','sans-serif']}}}}
+</script>
+<link href="https://cdn.jsdelivr.net/npm/fontsource-inter@5.0.0/index.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif}
+.tab-content{display:none;animation:fadeUp .4s ease}
+.tab-content.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(-120px) rotate(720deg);opacity:0}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.pop-in{animation:popIn .4s ease}
+.shake{animation:shake .3s ease}
+.bounce-in{animation:bounceIn .4s ease}
+.flip-card{perspective:1000px}
+.flip-card-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem}
+.flip-card-back{transform:rotateY(180deg)}
+.match-item{cursor:pointer;transition:all .2s;user-select:none;border-width:2px}
+.match-item.selected{background-color:#e0e7ff;border-color:#6366f1}
+.match-item.matched{background-color:#dcfce7;border-color:#22c55e;color:#166534;cursor:default;pointer-events:none}
+.match-item.wrong{background-color:#fee2e2;border-color:#ef4444;animation:shake .3s}
+.essay-answer{max-height:0;overflow:hidden;transition:max-height .5s ease,padding .3s ease}
+.essay-answer.show{max-height:1500px;padding-top:1rem}
+.progress-fill{transition:width .5s ease}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:#f1f5f9}
+::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:3px}
+.confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 1s ease-out forwards}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:12px;font-weight:600}
+.hover-lift{transition:transform .2s,box-shadow .2s}
+.hover-lift:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.1)}
+.quiz-option{transition:all .2s}
+.quiz-option:hover:not(.disabled){transform:translateX(5px)}
+.diagram-node{transition:all .3s}
+.diagram-node:hover{transform:scale(1.05);box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.pgk-option{transition:all .2s;cursor:pointer;user-select:none;border-width:2px}
+.pgk-option:hover{background-color:#f0fdfa}
+.pgk-option.selected{background-color:#e0e7ff;border-color:#6366f1}
+.pgk-option.disabled{pointer-events:none;opacity:.8}
+.tf-option{transition:all .2s;cursor:pointer;user-select:none;border-width:2px}
+.tf-option:hover{background-color:#f8fafc}
+.tf-option.disabled{pointer-events:none;opacity:.8}
+.check-box{width:20px;height:20px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.check-box.checked{background-color:#6366f1;border-color:#6366f1}
+</style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-teal-50/30 to-indigo-50/30 min-h-screen font-sans">
-
-    <header class="relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-rose-600 via-purple-600 to-indigo-600"></div>
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
-            <div class="absolute bottom-5 right-20 w-48 h-48 bg-white rounded-full blur-3xl"></div>
-        </div>
-        <div class="relative max-w-6xl mx-auto px-4 py-8 text-center text-white">
-            <div class="inline-flex items-center gap-3 mb-3">
-                <div class="bg-white/20 backdrop-blur-sm p-3 rounded-2xl">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
-                </div>
-                <div class="text-left">
-                    <h1 class="text-3xl md:text-4xl font-bold">ASAT SBK Kelas 8</h1>
-                    <p class="text-rose-100 text-lg">Seni Budaya & Keterampilan</p>
-                </div>
-            </div>
-            <div class="flex flex-wrap justify-center gap-3 mt-4">
-                <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">🖼️ Perspektif & Ilustrasi</span>
-                <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">🎨 Ragam Hias</span>
-                <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">📊 Poster & Seni Lukis</span>
-                <span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">🌿 Pewarna Alam</span>
-            </div>
-        </div>
-    </header>
-
-    <nav class="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex overflow-x-auto gap-0">
-                <button onclick="switchTab('materi')" id="tab-materi" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-3 border-rose-500 text-rose-700 bg-rose-50/50">
-                     Materi
-                </button>
-                <button onclick="switchTab('flashcard')" id="tab-flashcard" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-3 border-transparent text-slate-500 hover:text-indigo-600">
-                    🃏 Flashcard
-                </button>
-                <button onclick="switchTab('matching')" id="tab-matching" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-3 border-transparent text-slate-500 hover:text-indigo-600">
-                    🔗 Menjodohkan
-                </button>
-                <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-3 border-transparent text-slate-500 hover:text-indigo-600">
-                    🎯 Kuis
-                </button>
-                <button onclick="switchTab('essay')" id="tab-essay" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-3 border-transparent text-slate-500 hover:text-indigo-600">
-                    ✍️ Essay
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-6xl mx-auto px-4 py-6">
-
-        <!-- ==================== TAB 1: RANGKUMAN MATERI ==================== -->
-        <div id="content-materi" class="tab-content active">
-
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-                <div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-4 text-white hover-lift">
-                    <p class="text-2xl font-bold">Bab 1</p>
-                    <p class="text-rose-100 text-xs mt-1">Perspektif & Ilustrasi</p>
-                </div>
-                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-4 text-white hover-lift">
-                    <p class="text-2xl font-bold">Bab 2</p>
-                    <p class="text-blue-100 text-xs mt-1">Poster & Ragam Hias</p>
-                </div>
-                <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-4 text-white hover-lift">
-                    <p class="text-2xl font-bold">Bab 3</p>
-                    <p class="text-amber-100 text-xs mt-1">Ragam Hias & Seni Lukis</p>
-                </div>
-                <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-4 text-white hover-lift">
-                    <p class="text-2xl font-bold">Bab 4</p>
-                    <p class="text-green-100 text-xs mt-1">Pewarna & Bahan Alam</p>
-                </div>
-            </div>
-
-            <!-- BAB 1: PERSPEKTIF & ILUSTRASI -->
-            <div class="mb-8">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center text-2xl">🖼️</div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Bab 1 — Perspektif & Gambar Ilustrasi</h2>
-                        <p class="text-slate-500 text-sm">Titik hilang, gambar ilustrasi, dan melukis suasana</p>
-                    </div>
-                </div>
-
-                <!-- Perspektif -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-rose-100 text-rose-700 p-2 rounded-lg">📐</span> Perspektif (Titik Hilang)
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
-                        <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-5">
-                            <h4 class="font-bold text-rose-700 text-lg mb-2">Perspektif 1 Titik Hilang</h4>
-                            <p class="text-sm text-slate-700 mb-2">Perspektif yang menggunakan <strong>satu titik hilang</strong> pada garis horizon. Semua garis yang menjauh dari pengamat akan menuju ke satu titik tersebut.</p>
-                            <div class="bg-white rounded-lg p-3 text-sm">
-                                <p class="text-rose-600 font-medium">Ciri-ciri:</p>
-                                <ul class="text-slate-600 mt-1 space-y-1 ml-4 list-disc">
-                                    <li>Satu titik hilang di tengah</li>
-                                    <li>Garis horizon lurus horizontal</li>
-                                    <li>Cocok untuk gambar jalan lurus, lorong, rel kereta</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-5">
-                            <h4 class="font-bold text-indigo-700 text-lg mb-2">Perspektif 2 Titik Hilang</h4>
-                            <p class="text-sm text-slate-700 mb-2">Perspektif yang menggunakan <strong>dua titik hilang</strong> pada garis horizon. Sudut objek berada di depan pengamat.</p>
-                            <div class="bg-white rounded-lg p-3 text-sm">
-                                <p class="text-indigo-600 font-medium">Ciri-ciri:</p>
-                                <ul class="text-slate-600 mt-1 space-y-1 ml-4 list-disc">
-                                    <li>Dua titik hilang di kiri dan kanan</li>
-                                    <li>Sudut objek menghadap pengamat</li>
-                                    <li>Cocok untuk gambar gedung, kotak dari sudut</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 rounded-xl p-4 mb-4">
-                        <h4 class="font-bold text-slate-700 mb-2">📍 Garis Horizon & Titik Hilang</h4>
-                        <p class="text-sm text-slate-600"><strong>Garis horizon</strong> adalah garis khayal setinggi mata pengamat yang memisahkan langit dan tanah/laut. <strong>Titik hilang</strong> adalah titik pada garis horizon tempat semua garis sejajar tampak bertemu/menghilang.</p>
-                    </div>
-
-                    <div class="bg-teal-50 rounded-xl p-4">
-                        <h4 class="font-bold text-teal-700 mb-2">🎨 Langkah Menggambar Perspektif 1 Titik Hilang:</h4>
-                        <div class="space-y-2">
-                            <div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span><p class="text-sm text-slate-700">Buat garis horizon horizontal di tengah kertas</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span><p class="text-sm text-slate-700">Tentukan satu titik hilang (titik pusat) di garis horizon</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span><p class="text-sm text-slate-700">Gambar bentuk depan objek (misalnya persegi)</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span><p class="text-sm text-slate-700">Tarik garis dari sudut objek menuju titik hilang</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">5</span><p class="text-sm text-slate-700">Buat garis vertikal/horizontal untuk membentuk kedalaman</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">6</span><p class="text-sm text-slate-700">Tebalkan garis dan hapus garis bantu</p></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gambar Ilustrasi -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-purple-100 text-purple-700 p-2 rounded-lg">✏️</span> Gambar Ilustrasi
-                    </h3>
-                    <div class="bg-purple-50 rounded-xl p-4 mb-4">
-                        <p class="text-sm text-slate-700"><strong>Ilustrasi</strong> adalah gambar yang berfungsi untuk <strong>menerangkan, menjelaskan, atau memperindah</strong> suatu teks atau cerita. Ilustrasi membantu pembaca memahami isi cerita dengan lebih mudah.</p>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2">📌 Fungsi Ilustrasi:</h4>
-                            <ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
-                                <li>Memperjelas maksud cerita/teks</li>
-                                <li>Menarik perhatian pembaca</li>
-                                <li>Memperindah tampilan buku/majalah</li>
-                                <li>Membantu memahami alur cerita</li>
-                                <li>Memberikan kesan visual pada pesan</li>
-                            </ul>
-                        </div>
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2"> Jenis Ilustrasi:</h4>
-                            <ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
-                                <li><strong>Ilustrasi cerita:</strong> menggambarkan tokoh & adegan</li>
-                                <li><strong>Ilustrasi ilmu pengetahuan:</strong> gambar teknis/anatomi</li>
-                                <li><strong>Karikatur:</strong> gambar lucu/berlebihan</li>
-                                <li><strong>Komik:</strong> gambar cerita berurutan</li>
-                                <li><strong>Vignette:</strong> gambar pengisi halaman kosong</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Melukis Suasana -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-amber-100 text-amber-700 p-2 rounded-lg">🌅</span> Melukis Suasana & Unsur Warna
-                    </h3>
-                    <p class="text-sm text-slate-600 mb-3">Melukis suasana adalah kegiatan membuat lukisan yang menggambarkan <strong>situasi, keadaan, atau atmosfer</strong> tertentu menggunakan unsur-unsur seni rupa terutama <strong>warna</strong>.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-3 text-center">
-                            <div class="text-3xl mb-1">🌊</div>
-                            <p class="text-xs font-bold text-blue-700">Suasana Pagi</p>
-                            <p class="text-xs text-slate-500">Warna cerah: kuning, biru muda, hijau muda</p>
-                        </div>
-                        <div class="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-xl p-3 text-center">
-                            <div class="text-3xl mb-1">🌅</div>
-                            <p class="text-xs font-bold text-amber-700">Suasana Sore</p>
-                            <p class="text-xs text-slate-500">Warna hangat: oranye, merah, coklat keemasan</p>
-                        </div>
-                        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-xl p-3 text-center">
-                            <div class="text-3xl mb-1"></div>
-                            <p class="text-xs font-bold text-indigo-700">Suasana Malam</p>
-                            <p class="text-xs text-slate-500">Warna gelap: biru tua, ungu, hitam, perak</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BAB 2: POSTER & RAGAM HIAS -->
-            <div class="mb-8">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">📊</div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Bab 2 — Poster & Ragam Hias</h2>
-                        <p class="text-slate-500 text-sm">Membuat poster, motif ragam hias, dan ukurannya</p>
-                    </div>
-                </div>
-
-                <!-- Poster -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-blue-100 text-blue-700 p-2 rounded-lg"></span> Poster
-                    </h3>
-                    <div class="bg-blue-50 rounded-xl p-4 mb-4">
-                        <p class="text-sm text-slate-700"><strong>Poster</strong> adalah media publikasi yang terdiri atas tulisan, gambar, atau kombinasi keduanya dengan tujuan <strong>memberikan informasi kepada khalayak ramai</strong>. Poster biasanya ditempel di tempat-tempat umum.</p>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2">✅ Ciri Poster yang Baik:</h4>
-                            <ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
-                                <li>Menggunakan bahasa yang singkat, jelas, dan menarik</li>
-                                <li>Gambar/foto yang mendukung pesan</li>
-                                <li>Kombinasi warna yang kontras dan menarik</li>
-                                <li>Memiliki slogan yang mudah diingat</li>
-                                <li>Informasi yang jelas dan mudah dipahami</li>
-                                <li>Ditempatkan di tempat strategis/umum</li>
-                            </ul>
-                        </div>
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2"> Unsur Penting Poster:</h4>
-                            <ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
-                                <li><strong>Gambar/Ilustrasi:</strong> visual utama yang menarik</li>
-                                <li><strong>Teks/Slogan:</strong> kalimat pendek dan kuat</li>
-                                <li><strong>Warna:</strong> kontras dan sesuai tema</li>
-                                <li><strong>Tata letak:</strong> rapi dan mudah dibaca</li>
-                                <li><strong>Informasi:</strong> waktu, tempat, kontak (jika perlu)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="bg-amber-50 rounded-xl p-4">
-                        <h4 class="font-bold text-amber-700 mb-2">📐 Langkah Membuat Poster:</h4>
-                        <div class="space-y-2">
-                            <div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span><p class="text-sm text-slate-700">Tentukan tema dan tujuan poster</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span><p class="text-sm text-slate-700">Buat slogan/kalimat yang singkat dan menarik</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span><p class="text-sm text-slate-700">Buat sketsa tata letak (layout) poster</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span><p class="text-sm text-slate-700">Gambar ilustrasi dan tulis teks dengan rapi</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">5</span><p class="text-sm text-slate-700">Beri warna yang kontras dan menarik</p></div>
-                            <div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">6</span><p class="text-sm text-slate-700">Finishing: rapikan dan tambahkan detail</p></div>
-                        </div>
-                    </div>
-
-                    <div class="bg-green-50 rounded-xl p-4 mt-4">
-                        <h4 class="font-bold text-green-700 mb-2">🔤 Contoh Slogan Sesuai Tema:</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-                            <div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Lingkungan:</span> "Buanglah Sampah pada Tempatnya!"</div>
-                            <div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Kesehatan:</span> "Cuci Tangan, Lindungi Diri!"</div>
-                            <div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Pendidikan:</span> "Rajin Belajar, Raih Prestasi!"</div>
-                            <div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Lalu Lintas:</span> "Taati Rambu, Selamat di Jalan!"</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Ragam Hias -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg"></span> Ragam Hias
-                    </h3>
-                    <div class="bg-indigo-50 rounded-xl p-4 mb-4">
-                        <p class="text-sm text-slate-700"><strong>Ragam hias</strong> (ornamen) adalah bentuk-bentuk dekoratif yang digunakan untuk <strong>memperindah</strong> suatu benda. Ragam hias dapat berupa motif flora, fauna, geometris, atau figuratif.</p>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2">🌿 Motif Flora:</h4>
-                            <p class="text-sm text-slate-600 mb-2">Motif berbentuk tumbuhan, bunga, daun, atau akar. Sering ditemukan pada kain batik, ukiran kayu, dan tenun.</p>
-                            <p class="text-xs text-indigo-600">Contoh: motif bunga teratai, motif daun, motif sulur</p>
-                        </div>
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2">🐾 Motif Fauna:</h4>
-                            <p class="text-sm text-slate-600 mb-2">Motif berbentuk hewan seperti burung, ikan, kupu-kupu, atau naga.</p>
-                            <p class="text-xs text-indigo-600">Contoh: motif burung, motif ikan, motif garuda</p>
-                        </div>
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2"> Motif Geometris:</h4>
-                            <p class="text-sm text-slate-600 mb-2">Motif berbentuk bangun geometris seperti garis, lingkaran, segitiga, persegi, atau zigzag.</p>
-                            <p class="text-xs text-indigo-600">Contoh: kawung, tumpal, meander, pilin</p>
-                        </div>
-                        <div class="bg-slate-50 rounded-xl p-4">
-                            <h4 class="font-bold text-slate-700 mb-2">👤 Motif Figuratif:</h4>
-                            <p class="text-sm text-slate-600 mb-2">Motif berbentuk manusia atau makhluk hidup yang digayakan.</p>
-                            <p class="text-xs text-indigo-600">Contoh: motif wayang, motif manusia menari</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BAB 3: RAGAM HIAS NUSANTARA & SENI LUKIS -->
-            <div class="mb-8">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">🏛️</div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Bab 3 — Ragam Hias Nusantara & Seni Lukis</h2>
-                        <p class="text-slate-500 text-sm">Motif daerah Nusantara, aliran seni lukis, dan tokoh pelukis</p>
-                    </div>
-                </div>
-
-                <!-- Ragam Hias Nusantara -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-amber-100 text-amber-700 p-2 rounded-lg">🇩</span> Ragam Hias Nusantara
-                    </h3>
-                    <p class="text-sm text-slate-600 mb-4">Indonesia memiliki kekayaan ragam hias yang beragam dari berbagai daerah. Setiap daerah memiliki motif khas yang mencerminkan budaya dan kearifan lokal.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                            <p class="font-bold text-amber-700 text-sm">🏝️ Jawa</p>
-                            <p class="text-xs text-slate-600 mt-1">Motif batik: parang, kawung, mega mendung</p>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                            <p class="font-bold text-amber-700 text-sm">🌺 Bali</p>
-                            <p class="text-xs text-slate-600 mt-1">Motif: ceplok, patra, ukiran bunga teratai</p>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                            <p class="font-bold text-amber-700 text-sm">🐉 Kalimantan</p>
-                            <p class="text-xs text-slate-600 mt-1">Motif: mandala, motif dayak, burung enggang</p>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                            <p class="font-bold text-amber-700 text-sm">🏔️ Papua</p>
-                            <p class="text-xs text-slate-600 mt-1">Motif: asmat, tifa, perisai dengan ukiran khas</p>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                            <p class="font-bold text-amber-700 text-sm">🌊 Sulawesi</p>
-                            <p class="text-xs text-slate-600 mt-1">Motif: toraja, pa'tedong (kerbau), tenun khas</p>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                            <p class="font-bold text-amber-700 text-sm">🌴 Sumatera</p>
-                            <p class="text-xs text-slate-600 mt-1">Motif: songket, ukiran rumah gadang, minangkabau</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Seni Lukis -->
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-purple-100 text-purple-700 p-2 rounded-lg"></span> Seni Lukis — Aliran & Tokoh
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                        <div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
-                            <h4 class="font-bold text-purple-700 mb-2">️ Aliran-Aliran Seni Lukis:</h4>
-                            <ul class="text-sm text-slate-600 space-y-2">
-                                <li><strong>Realisme:</strong> melukis objek sesuai kenyataan/asli</li>
-                                <li><strong>Naturalisme:</strong> mirip realisme, menekankan keindahan alam</li>
-                                <li><strong>Ekspresionisme:</strong> mengekspresikan emosi/perasaan pelukis</li>
-                                <li><strong>Impresionisme:</strong> menangkap kesan cahaya & suasana</li>
-                                <li><strong>Abstrak:</strong> tidak menggambarkan objek nyata, bentuk bebas</li>
-                                <li><strong>Surealisme:</strong> menggambarkan dunia mimpi/imajinasi</li>
-                            </ul>
-                        </div>
-                        <div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
-                            <h4 class="font-bold text-purple-700 mb-2">👨‍ Tokoh Pelukis Indonesia:</h4>
-                            <ul class="text-sm text-slate-600 space-y-2">
-                                <li><strong>Raden Saleh</strong> — "Penangkapan Pangeran Diponegoro" (Romantisme)</li>
-                                <li><strong>Affandi</strong> — "Kakek Tua", "Potret Diri" (Ekspresionisme)</li>
-                                <li><strong>Basuki Abdullah</strong> — "Penari Bali" (Realisme)</li>
-                                <li><strong>S. Sudjojono</strong> — "Di Depan Kelambu Terbuka" (Realisme)</li>
-                                <li><strong>Kartika Affandi</strong> — karya-karya ekspresionis</li>
-                                <li><strong>Popo Iskandar</strong> — "Kucing" (ekspresionisme)</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BAB 4: PEWARNA ALAM & BAHAN ALAM -->
-            <div class="mb-8">
-                <div class="flex items-center gap-3 mb-5">
-                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-2xl">🌿</div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800">Bab 4 — Pewarna Alam & Bahan Alam</h2>
-                        <p class="text-slate-500 text-sm">Pewarna dari bahan alam dan berkarya dengan bahan alam</p>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-green-100 text-green-700 p-2 rounded-lg">🌈</span> Pewarna dari Bahan Alam
-                    </h3>
-                    <div class="bg-green-50 rounded-xl p-4 mb-4">
-                        <p class="text-sm text-slate-700"><strong>Pewarna alami</strong> adalah pewarna yang diperoleh dari <strong>bahan-bahan alam</strong> seperti tumbuhan, buah, akar, dan kulit kayu. Pewarna alami lebih ramah lingkungan dibandingkan pewarna sintetis.</p>
-                        <p class="text-sm text-slate-700 mt-2"><strong>Manfaat pewarna alam:</strong> ramah lingkungan, aman untuk kesehatan, warna unik & natural, melestarikan tradisi.</p>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                        <div class="bg-red-50 border border-red-200 rounded-xl p-3 text-center">
-                            <div class="w-10 h-10 bg-red-400 rounded-full mx-auto mb-2"></div>
-                            <p class="text-xs font-bold text-red-700">Kunyit</p>
-                            <p class="text-xs text-slate-500">→ Kuning</p>
-                        </div>
-                        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-center">
-                            <div class="w-10 h-10 bg-blue-500 rounded-full mx-auto mb-2"></div>
-                            <p class="text-xs font-bold text-blue-700">Indigo/Tom</p>
-                            <p class="text-xs text-slate-500">→ Biru</p>
-                        </div>
-                        <div class="bg-green-50 border border-green-200 rounded-xl p-3 text-center">
-                            <div class="w-10 h-10 bg-green-500 rounded-full mx-auto mb-2"></div>
-                            <p class="text-xs font-bold text-green-700">Daun Suji</p>
-                            <p class="text-xs text-slate-500">→ Hijau</p>
-                        </div>
-                        <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 text-center">
-                            <div class="w-10 h-10 bg-orange-400 rounded-full mx-auto mb-2"></div>
-                            <p class="text-xs font-bold text-orange-700">Kayu Secang</p>
-                            <p class="text-xs text-slate-500">→ Merah</p>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-center">
-                            <div class="w-10 h-10 bg-amber-600 rounded-full mx-auto mb-2"></div>
-                            <p class="text-xs font-bold text-amber-700">Kulit Manggis</p>
-                            <p class="text-xs text-slate-500">→ Coklat</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
-                    <h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
-                        <span class="bg-teal-100 text-teal-700 p-2 rounded-lg"></span> Berkarya dengan Bahan Alam
-                    </h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
-                            <h4 class="font-bold text-teal-700 mb-2">Contoh Bahan Alam untuk Berkarya:</h4>
-                            <ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
-                                <li><strong>Daun kering:</strong> untuk kolase & mozaik</li>
-                                <li><strong>Biji-bijian:</strong> untuk hiasan & kerajinan</li>
-                                <li><strong>Kulit kerang:</strong> untuk aksesoris & hiasan</li>
-                                <li><strong>Batang kayu:</strong> untuk ukiran & patung mini</li>
-                                <li><strong>Sabut kelapa:</strong> untuk anyaman & tali</li>
-                                <li><strong>Bambu:</strong> untuk anyaman & furniture mini</li>
-                            </ul>
-                        </div>
-                        <div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
-                            <h4 class="font-bold text-teal-700 mb-2">🔨 Langkah Berkarya dengan Bahan Alam:</h4>
-                            <div class="space-y-2">
-                                <div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span><p class="text-sm text-slate-700">Tentukan karya yang ingin dibuat</p></div>
-                                <div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span><p class="text-sm text-slate-700">Kumpulkan bahan alam yang dibutuhkan</p></div>
-                                <div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span><p class="text-sm text-slate-700">Bersihkan & siapkan bahan (keringkan, potong)</p></div>
-                                <div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">4</span><p class="text-sm text-slate-700">Buat sketsa/desain karya</p></div>
-                                <div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">5</span><p class="text-sm text-slate-700">Rakit/susun bahan alam sesuai desain</p></div>
-                                <div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">6</span><p class="text-sm text-slate-700">Finishing: beri pelapis (vernis) jika perlu</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 2: FLASHCARD INTERAKTIF ==================== -->
-        <div id="content-flashcard" class="tab-content">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 mb-2">🃏 Flashcard Interaktif</h2>
-                <p class="text-slate-600">Klik kartu untuk membalik • Gunakan tombol navigasi untuk berpindah</p>
-            </div>
-
-            <div class="max-w-2xl mx-auto">
-                <div class="flex justify-center gap-2 mb-4 flex-wrap" id="card-dots"></div>
-
-                <div class="text-center mb-4">
-                    <span id="card-counter" class="inline-block bg-indigo-100 text-indigo-700 font-bold px-5 py-2 rounded-full text-sm">Kartu 1 dari 15</span>
-                </div>
-
-                <div class="flip-card w-full h-80 cursor-pointer" id="flashcard" onclick="flipCard()">
-                    <div class="flip-card-inner" id="flashcard-inner">
-                        <div class="flip-card-front bg-gradient-to-br from-rose-500 via-purple-500 to-indigo-600 text-white shadow-2xl">
-                            <div class="text-5xl mb-4" id="card-icon"></div>
-                            <p class="text-xs uppercase tracking-widest mb-3 opacity-75">Pertanyaan / Istilah</p>
-                            <h3 class="text-xl md:text-2xl font-bold text-center px-6 leading-relaxed" id="card-front-text">Memuat...</h3>
-                            <p class="text-sm mt-5 opacity-60">👆 Klik untuk membalik</p>
-                        </div>
-                        <div class="flip-card-back bg-gradient-to-br from-slate-700 to-slate-900 text-white shadow-2xl">
-                            <div class="text-3xl mb-3">💡</div>
-                            <p class="text-xs uppercase tracking-widest mb-3 opacity-75">Jawaban / Penjelasan</p>
-                            <p class="text-base md:text-lg text-center px-6 leading-relaxed" id="card-back-text">Memuat...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-center gap-4 mt-6">
-                    <button onclick="prevCard()" class="flex items-center gap-2 bg-white text-slate-700 font-semibold px-5 py-2.5 rounded-xl shadow-md hover:bg-slate-50 transition-colors border border-slate-200 hover-lift">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                        Sebelumnya
-                    </button>
-                    <button onclick="shuffleCards()" class="flex items-center gap-2 bg-teal-100 text-teal-700 font-semibold px-5 py-2.5 rounded-xl shadow-md hover:bg-teal-200 transition-colors hover-lift">
-                         Acak
-                    </button>
-                    <button onclick="nextCard()" class="flex items-center gap-2 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-md hover:bg-indigo-700 transition-colors hover-lift">
-                        Selanjutnya
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 3: MENJODOHKAN ==================== -->
-        <div id="content-matching" class="tab-content">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 mb-2">🔗 Permainan Menjodohkan</h2>
-                <p class="text-slate-600">Pilih istilah di kiri, lalu pilih pasangannya di kanan. Cocokkan semua!</p>
-            </div>
-
-            <div class="max-w-4xl mx-auto">
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm text-slate-600 mb-1">
-                        <span>Progress</span>
-                        <span id="match-progress-text">0 dari 10 pasang</span>
-                    </div>
-                    <div class="w-full bg-slate-200 rounded-full h-3">
-                        <div id="match-progress-bar" class="progress-fill bg-gradient-to-r from-rose-500 to-indigo-500 h-3 rounded-full" style="width:0%"></div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="space-y-3">
-                        <h3 class="font-bold text-slate-700 text-center mb-2"> Istilah / Soal</h3>
-                        <div id="match-left" class="space-y-3"></div>
-                    </div>
-                    <div class="space-y-3">
-                        <h3 class="font-bold text-slate-700 text-center mb-2">💡 Jawaban / Penjelasan</h3>
-                        <div id="match-right" class="space-y-3"></div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-6">
-                    <button onclick="resetMatching()" class="bg-white text-slate-700 font-semibold px-6 py-2.5 rounded-xl shadow-md hover:bg-slate-50 transition-colors border border-slate-200 hover-lift">
-                        🔄 Mulai Ulang
-                    </button>
-                </div>
-
-                <div id="match-success" class="hidden mt-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-white text-center shadow-lg">
-                    <div class="text-4xl mb-2">🎉</div>
-                    <h3 class="text-2xl font-bold">Hebat! Semua pasangan benar!</h3>
-                    <p class="text-green-100 mt-1">Kamu sudah memahami semua materi ini!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 4: KUIS INTERAKTIF ==================== -->
-        <div id="content-quiz" class="tab-content">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 mb-2">🎯 Kuis Interaktif</h2>
-                <p class="text-slate-600">Jawab soal-soal berikut berdasarkan kisi-kisi ASAT SBK Kelas 8!</p>
-            </div>
-
-            <div class="mb-6 bg-white rounded-2xl shadow-md border border-slate-200 p-4">
-                <div class="flex justify-between text-sm text-slate-600 mb-2">
-                    <span>Progress Kuis</span>
-                    <span id="quiz-progress-text">0 soal terjawab</span>
-                </div>
-                <div class="w-full bg-slate-200 rounded-full h-3">
-                    <div id="quiz-progress-bar" class="progress-fill bg-gradient-to-r from-rose-500 to-indigo-500 h-3 rounded-full" style="width:0%"></div>
-                </div>
-                <div class="flex gap-4 mt-3 text-sm">
-                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-green-500"></span> Benar: <strong id="quiz-correct-count">0</strong></span>
-                    <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500"></span> Salah: <strong id="quiz-wrong-count">0</strong></span>
-                </div>
-            </div>
-
-            <!-- PG Section -->
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-lg text-sm">Pilihan Ganda</span>
-                    10 Soal
-                </h3>
-                <div id="quiz-pg-questions" class="space-y-5"></div>
-            </div>
-
-            <!-- PG Kompleks Section -->
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-sm">PG Kompleks</span>
-                    10 Soal <span class="text-sm font-normal text-slate-500">(pilih lebih dari 1 jawaban)</span>
-                </h3>
-                <div id="quiz-pgk-questions" class="space-y-5"></div>
-            </div>
-
-            <!-- Benar-Salah Section -->
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-lg text-sm">Benar / Salah</span>
-                    5 Soal
-                </h3>
-                <div id="quiz-tf-questions" class="space-y-5"></div>
-            </div>
-
-            <!-- Isian Section -->
-            <div class="mb-8">
-                <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-lg text-sm">Isian Singkat</span>
-                    5 Soal
-                </h3>
-                <div id="quiz-isian-questions" class="space-y-5"></div>
-            </div>
-
-            <div id="final-score" class="hidden bg-gradient-to-r from-rose-500 to-indigo-600 rounded-2xl p-8 text-white text-center shadow-2xl">
-                <div class="text-6xl mb-4" id="final-emoji"></div>
-                <h3 class="text-3xl font-bold mb-2">Skor Akhir</h3>
-                <p class="text-5xl font-bold" id="final-score-text">0</p>
-                <p class="text-lg mt-2 opacity-90" id="final-score-message"></p>
-                <button onclick="resetQuiz()" class="mt-4 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-white/30 transition-colors">
-                    🔄 Ulangi Kuis
-                </button>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 5: ESSAY ==================== -->
-        <div id="content-essay" class="tab-content">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold text-slate-800 mb-2">✍️ Soal Essay</h2>
-                <p class="text-slate-600">Tulis jawabanmu, lalu klik "Lihat Kunci Jawaban" untuk membandingkan.</p>
-            </div>
-
-            <div id="essay-questions-container" class="max-w-3xl mx-auto space-y-6"></div>
-        </div>
-
-    </main>
-
-    <footer class="bg-slate-800 text-slate-400 text-center py-6 mt-8">
-        <p class="text-sm">© 2026 ASAT SBK Kelas 8 — Seni Budaya & Keterampilan</p>
-        <p class="text-xs mt-1">Media Pembelajaran Interaktif untuk Siswa SMP</p>
-    </footer>
-
-    <script>
-        // ============================================================
-        // TAB NAVIGATION
-        // ============================================================
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('content-' + tabName).classList.add('active');
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('border-rose-500','text-rose-700','bg-rose-50/50');
-                btn.classList.add('border-transparent','text-slate-500');
-            });
-            const activeBtn = document.getElementById('tab-' + tabName);
-            activeBtn.classList.remove('border-transparent','text-slate-500');
-            activeBtn.classList.add('border-rose-500','text-rose-700','bg-rose-50/50');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ============================================================
-        // FLASHCARD DATA & LOGIC
-        // ============================================================
-        let flashcardData = [
-            { icon:'📐', front:'Apa itu perspektif satu titik hilang?', back:'Perspektif yang menggunakan SATU titik hilang pada garis horizon. Semua garis yang menjauh dari pengamat akan menuju ke satu titik tersebut. Cocok untuk menggambar jalan lurus, lorong, atau rel kereta api.' },
-            { icon:'📐', front:'Apa ciri perspektif dua titik hilang?', back:'Menggunakan DUA titik hilang di kiri dan kanan garis horizon. Sudut objek berada di depan pengamat. Cocok untuk menggambar gedung, kotak, atau benda dari sudut pandang tertentu.' },
-            { icon:'📍', front:'Apa itu garis horizon?', back:'Garis khayal setinggi mata pengamat yang memisahkan langit dan tanah/laut. Garis horizon menjadi acuan dalam menggambar perspektif.' },
-            { icon:'✏️', front:'Apa fungsi gambar ilustrasi?', back:'Untuk menerangkan, menjelaskan, atau memperindah suatu teks/cerita. Ilustrasi membantu pembaca memahami isi cerita dengan lebih mudah dan menarik perhatian.' },
-            { icon:'', front:'Sebutkan jenis-jenis ilustrasi!', back:'1) Ilustrasi cerita (tokoh & adegan)\n2) Ilustrasi ilmu pengetahuan (gambar teknis)\n3) Karikatur (gambar lucu/berlebihan)\n4) Komik (gambar cerita berurutan)\n5) Vignette (pengisi halaman kosong)' },
-            { icon:'📊', front:'Apa itu poster?', back:'Media publikasi terdiri dari tulisan, gambar, atau kombinasi keduanya dengan tujuan memberikan informasi kepada khalayak ramai. Biasanya ditempel di tempat-tempat umum.' },
-            { icon:'✅', front:'Sebutkan ciri poster yang baik!', back:'1) Bahasa singkat, jelas, menarik\n2) Gambar/foto mendukung pesan\n3) Warna kontras dan menarik\n4) Slogan mudah diingat\n5) Informasi jelas\n6) Ditempatkan strategis' },
-            { icon:'🌺', front:'Apa itu ragam hias?', back:'Bentuk-bentuk dekoratif (ornamen) yang digunakan untuk memperindah suatu benda. Ragam hias dapat berupa motif flora, fauna, geometris, atau figuratif.' },
-            { icon:'', front:'Apa motif flora?', back:'Motif berbentuk tumbuhan, bunga, daun, atau akar. Sering ditemukan pada kain batik, ukiran kayu, dan tenun. Contoh: motif bunga teratai, motif daun, motif sulur.' },
-            { icon:'', front:'Apa motif geometris?', back:'Motif berbentuk bangun geometris seperti garis, lingkaran, segitiga, persegi, atau zigzag. Contoh: kawung, tumpal, meander, pilin.' },
-            { icon:'', front:'Apa itu aliran realisme?', back:'Aliran seni lukis yang melukis objek sesuai kenyataan/asli. Objek digambarkan secara detail dan mirip dengan aslinya. Tokoh: Basuki Abdullah, S. Sudjojono.' },
-            { icon:'🎨', front:'Apa itu aliran ekspresionisme?', back:'Aliran seni lukis yang mengekspresikan emosi dan perasaan pelukis. Gambar tidak harus mirip aslinya, tetapi conveying emosi. Tokoh: Affandi.' },
-            { icon:'🌈', front:'Contoh pewarna alami dan warnanya?', back:'• Kunyit → Kuning\n• Indigo/Tom → Biru\n• Daun Suji → Hijau\n• Kayu Secang → Merah\n• Kulit Manggis → Coklat' },
-            { icon:'🍃', front:'Contoh bahan alam untuk berkarya?', back:'• Daun kering → kolase & mozaik\n• Biji-bijian → hiasan & kerajinan\n• Kulit kerang → aksesoris\n• Batang kayu → ukiran & patung\n• Sabut kelapa → anyaman\n• Bambu → anyaman & furniture mini' },
-            { icon:'👨🎨', front:'Siapa Raden Saleh dan karyanya?', back:'Raden Saleh adalah pelukis Indonesia beraliran Romantisme. Karya terkenal: "Penangkapan Pangeran Diponegoro". Ia dianggap sebagai pelukis modern Indonesia pertama.' }
-        ];
-
-        let currentCardIndex = 0;
-        let isFlipped = false;
-
-        function updateFlashcard() {
-            const card = flashcardData[currentCardIndex];
-            document.getElementById('card-icon').textContent = card.icon;
-            document.getElementById('card-front-text').textContent = card.front;
-            document.getElementById('card-back-text').textContent = card.back;
-            document.getElementById('card-counter').textContent = `Kartu ${currentCardIndex + 1} dari ${flashcardData.length}`;
-            isFlipped = false;
-            document.getElementById('flashcard').classList.remove('flipped');
-            updateCardDots();
-        }
-
-        function updateCardDots() {
-            const container = document.getElementById('card-dots');
-            let dotsHTML = '';
-            for (let i = 0; i < flashcardData.length; i++) {
-                const isActive = i === currentCardIndex;
-                dotsHTML += `<div class="w-3 h-3 rounded-full transition-all cursor-pointer ${isActive ? 'bg-indigo-500 scale-125' : 'bg-slate-300 hover:bg-slate-400'}" onclick="goToCard(${i})"></div>`;
-            }
-            container.innerHTML = dotsHTML;
-        }
-
-        function flipCard() {
-            const card = document.getElementById('flashcard');
-            isFlipped = !isFlipped;
-            card.classList.toggle('flipped', isFlipped);
-        }
-
-        function nextCard() { currentCardIndex = (currentCardIndex + 1) % flashcardData.length; updateFlashcard(); }
-        function prevCard() { currentCardIndex = (currentCardIndex - 1 + flashcardData.length) % flashcardData.length; updateFlashcard(); }
-        function goToCard(idx) { currentCardIndex = idx; updateFlashcard(); }
-        function shuffleCards() {
-            for (let i = flashcardData.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [flashcardData[i], flashcardData[j]] = [flashcardData[j], flashcardData[i]];
-            }
-            currentCardIndex = 0;
-            updateFlashcard();
-        }
-
-        // ============================================================
-        // MATCHING GAME (10 pasang)
-        // ============================================================
-        const matchingPairs = [
-            { left:'Perspektif 1 titik hilang', right:'Satu titik pada garis horizon, cocok untuk jalan lurus' },
-            { left:'Perspektif 2 titik hilang', right:'Dua titik di kiri-kanan horizon, sudut objek di depan' },
-            { left:'Garis horizon', right:'Garis khayal setinggi mata pengamat' },
-            { left:'Ilustrasi', right:'Gambar untuk menerangkan/memperindah teks' },
-            { left:'Poster', right:'Media publikasi untuk memberi informasi ke khalayak ramai' },
-            { left:'Motif flora', right:'Motif berbentuk tumbuhan, bunga, daun' },
-            { left:'Motif geometris', right:'Motif berbentuk segitiga, lingkaran, zigzag' },
-            { left:'Realisme', right:'Aliran lukis yang menggambarkan objek sesuai kenyataan' },
-            { left:'Kunyit', right:'Bahan alam yang menghasilkan warna kuning' },
-            { left:'Indigo', right:'Bahan alam yang menghasilkan warna biru' }
-        ];
-
-        let selectedLeft = null;
-        let matchedPairs = 0;
-
-        function initMatchingGame() {
-            matchedPairs = 0;
-            selectedLeft = null;
-            const leftContainer = document.getElementById('match-left');
-            const rightContainer = document.getElementById('match-right');
-            const shuffledRight = [...matchingPairs].sort(() => Math.random() - 0.5);
-
-            let leftHTML = '';
-            matchingPairs.forEach((pair, idx) => {
-                leftHTML += `<div class="match-item bg-white border-2 border-slate-200 rounded-xl p-3 text-center font-semibold text-slate-700 text-sm hover-lift" data-match-id="${idx}" data-side="left" onclick="selectMatch(this)">${pair.left}</div>`;
-            });
-
-            let rightHTML = '';
-            shuffledRight.forEach((pair) => {
-                const originalIdx = matchingPairs.findIndex(p => p.right === pair.right);
-                rightHTML += `<div class="match-item bg-white border-2 border-slate-200 rounded-xl p-3 text-center text-xs text-slate-600 hover-lift" data-match-id="${originalIdx}" data-side="right" onclick="selectMatch(this)">${pair.right}</div>`;
-            });
-
-            leftContainer.innerHTML = leftHTML;
-            rightContainer.innerHTML = rightHTML;
-            updateMatchProgress();
-            document.getElementById('match-success').classList.add('hidden');
-        }
-
-        function selectMatch(el) {
-            if (el.classList.contains('matched')) return;
-            const side = el.getAttribute('data-side');
-            const matchId = el.getAttribute('data-match-id');
-
-            if (side === 'left') {
-                document.querySelectorAll('.match-item[data-side="left"]').forEach(item => item.classList.remove('selected'));
-                el.classList.add('selected');
-                selectedLeft = { el, matchId };
-            } else if (side === 'right' && selectedLeft) {
-                if (selectedLeft.matchId === matchId) {
-                    el.classList.add('matched');
-                    selectedLeft.el.classList.add('matched');
-                    selectedLeft.el.classList.remove('selected');
-                    matchedPairs++;
-                    updateMatchProgress();
-                    if (matchedPairs === matchingPairs.length) {
-                        document.getElementById('match-success').classList.remove('hidden');
-                        createConfetti(document.getElementById('match-success'));
-                    }
-                } else {
-                    el.classList.add('wrong');
-                    selectedLeft.el.classList.add('wrong');
-                    setTimeout(() => {
-                        el.classList.remove('wrong');
-                        selectedLeft.el.classList.remove('wrong');
-                        selectedLeft.el.classList.remove('selected');
-                        selectedLeft = null;
-                    }, 500);
-                    return;
-                }
-                selectedLeft = null;
-            }
-        }
-
-        function updateMatchProgress() {
-            const pct = (matchedPairs / matchingPairs.length) * 100;
-            document.getElementById('match-progress-bar').style.width = pct + '%';
-            document.getElementById('match-progress-text').textContent = `${matchedPairs} dari ${matchingPairs.length} pasang`;
-        }
-
-        function resetMatching() { initMatchingGame(); }
-
-        function createConfetti(container) {
-            const colors = ['#f43f5e','#8b5cf6','#3b82f6','#22c55e','#f59e0b','#06b6d4'];
-            for (let i = 0; i < 30; i++) {
-                const piece = document.createElement('div');
-                piece.className = 'confetti-piece';
-                piece.style.left = Math.random() * 100 + '%';
-                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                piece.style.animationDelay = Math.random() * 0.5 + 's';
-                piece.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
-                container.appendChild(piece);
-                setTimeout(() => piece.remove(), 1500);
-            }
-        }
-
-        // ============================================================
-        // KUIS INTERAKTIF
-        // ============================================================
-        const pgQuestions = [
-            { q:'Perspektif satu titik hilang menggunakan berapa titik hilang?', opts:['Satu titik','Dua titik','Tiga titik','Tanpa titik'], ans:0 },
-            { q:'Ciri perspektif dua titik hilang adalah ....', opts:['Satu titik di tengah','Dua titik di kiri dan kanan garis horizon','Tanpa garis horizon','Titik hilang di bawah kertas'], ans:1 },
-            { q:'Garis horizon pada gambar perspektif terletak di ....', opts:['Bagian atas kertas','Setinggi mata pengamat','Bagian bawah kertas','Di luar kertas'], ans:1 },
-            { q:'Fungsi gambar ilustrasi adalah ....', opts:['Menghias ruangan saja','Menerangkan dan memperindah teks/cerita','Menggantikan tulisan','Menjual barang'], ans:1 },
-            { q:'Jenis ilustrasi yang berupa gambar lucu dan berlebihan disebut ....', opts:['Komik','Vignette','Karikatur','Ilustrasi cerita'], ans:2 },
-            { q:'Poster adalah media publikasi yang bertujuan untuk ....', opts:['Menghibur saja','Memberikan informasi kepada khalayak ramai','Mengganti buku','Menyimpan data'], ans:1 },
-            { q:'Unsur warna pada lukisan suasana sore cenderung menggunakan ....', opts:['Warna biru dan hijau muda','Warna oranye, merah, dan coklat keemasan','Warna hitam dan putih','Warna biru tua dan ungu'], ans:1 },
-            { q:'Ciri poster yang baik adalah ....', opts:['Menggunakan bahasa panjang','Menggunakan banyak warna tanpa aturan','Menggunakan slogan yang singkat dan menarik','Tidak perlu gambar'], ans:2 },
-            { q:'Ukuran poster standar yang biasa digunakan adalah ....', opts:['A1 (594 × 841 mm)','A6 (105 × 148 mm)','A0 (841 × 1189 mm)','A8 (52 × 74 mm)'], ans:0 },
-            { q:'Motif ragam hias berbentuk segitiga, lingkaran, dan zigzag termasuk motif ....', opts:['Flora','Fauna','Geometris','Figuratif'], ans:2 }
-        ];
-
-        const pgkQuestions = [
-            { q:'Pilih gambar yang sesuai dengan jenis perspektif yang benar:', opts:['Perspektif 1 titik → lorong/jalan lurus','Perspektif 2 titik → gedung dari sudut','Perspektif 1 titik → pemandangan laut tanpa titik hilang','Perspektif 2 titik → wajah manusia dari depan'], ans:[0,1] },
-            { q:'Langkah menggambar perspektif satu titik hilang yang benar:', opts:['Buat garis horizon','Tentukan satu titik hilang di garis horizon','Tarik garis dari sudut objek ke titik hilang','Langsung mewarnai tanpa garis bantu'], ans:[0,1,2] },
-            { q:'Unsur ilustrasi yang tepat untuk memperjelas cerita:', opts:['Gambar tokoh sesuai cerita','Warna yang mendukung suasana','Teks penjelasan','Garis-garis acak tanpa makna'], ans:[0,1,2] },
-            { q:'Kombinasi warna suasana yang tepat:', opts:['Pagi: kuning, biru muda, hijau muda','Siang: merah terang, jingga, putih','Sore: oranye, merah, coklat keemasan','Malam: biru tua, ungu, hitam'], ans:[0,2,3] },
-            { q:'Unsur penting dalam poster:', opts:['Gambar/ilustrasi','Teks/slogan','Warna yang kontras','Harga barang yang dijual'], ans:[0,1,2] },
-            { q:'Slogan yang tepat untuk poster tema lingkungan:', opts:['"Buanglah sampah pada tempatnya!"',"Ayo beli barang mahal!",""Jagalah kelestarian alam!",""Hemat air, hemat energi!""], ans:[0,2,3] },
-            { q:'Motif flora, fauna, dan geometris yang benar:', opts:['Flora: bunga, daun, sulur','Fauna: burung, ikan, kupu-kupu','Geometris: kawung, tumpal, meander','Flora: segitiga, lingkaran, persegi'], ans:[0,1,2] },
-            { q:'Pola pengulangan motif yang benar:', opts:['Motif berulang secara teratur','Motif dibuat acak tanpa pola','Motif simetris kiri-kanan','Motif berulang membentuk garis'], ans:[0,2,3] },
-            { q:'Keunikan ragam hias daerah:', opts:['Jawa: batik parang, kawung','Bali: ukiran bunga teratai','Papua: motif asmat','Semua daerah memiliki motif yang sama'], ans:[0,1,2] },
-            { q:'Jenis aliran seni lukis:', opts:['Realisme: melukis sesuai kenyataan','Ekspresionisme: mengekspresikan emosi','Abstrak: tidak menggambarkan objek nyata','Semua aliran sama saja'], ans:[0,1,2] }
-        ];
-
-        const tfQuestions = [
-            { q:'Perspektif satu titik hilang menggunakan dua titik hilang pada garis horizon.', ans:false, explanation:'Salah. Perspektif satu titik hilang menggunakan SATU titik hilang, bukan dua.' },
-            { q:'Poster yang baik menggunakan bahasa yang singkat, jelas, dan menarik.', ans:true, explanation:'Benar. Poster yang baik harus menggunakan bahasa singkat, jelas, dan menarik agar mudah dipahami.' },
-            { q:'Motif geometris adalah motif berbentuk tumbuhan dan bunga.', ans:false, explanation:'Salah. Motif geometris berbentuk bangun geometris (segitiga, lingkaran, dll). Motif tumbuhan/flora adalah motif flora.' },
-            { q:'Aliran realisme melukis objek sesuai kenyataan/asli.', ans:true, explanation:'Benar. Realisme adalah aliran yang menggambarkan objek secara detail dan mirip dengan aslinya.' },
-            { q:'Kunyit menghasilkan warna biru saat digunakan sebagai pewarna alami.', ans:false, explanation:'Salah. Kunyit menghasilkan warna KUNING. Yang menghasilkan warna biru adalah indigo/tom.' }
-        ];
-
-        const isianQuestions = [
-            { q:'Titik pada garis horizon tempat semua garis sejajar tampak bertemu disebut <strong>__________</strong>.', ans:['titik hilang','titik lenyap'] },
-            { q:'Gambar yang berfungsi untuk menerangkan atau memperindah teks disebut <strong>__________</strong>.', ans:['ilustrasi','gambar ilustrasi'] },
-            { q:'Motif geometris yang berbentuk seperti ketupat/belah ketupat disebut motif <strong>__________</strong>.', ans:['kawung'] },
-            { q:'Aliran seni lukis yang mengekspresikan emosi pelukis disebut <strong>__________</strong>.', ans:['ekspresionisme','ekspresionis'] },
-            { q:'Bahan alam kunyit menghasilkan warna <strong>__________</strong>.', ans:['kuning'] }
-        ];
-
-        let quizAnswers = {};
-        let quizCorrect = 0;
-        let quizWrong = 0;
-        let quizAnswered = 0;
-        const totalQuestions = pgQuestions.length + pgkQuestions.length + tfQuestions.length + isianQuestions.length;
-
-        function renderQuiz() {
-            // PG
-            const pgContainer = document.getElementById('quiz-pg-questions');
-            let pgHTML = '';
-            pgQuestions.forEach((q, idx) => {
-                const labels = ['A','B','C','D'];
-                pgHTML += `<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="pg-q-${idx}">
-                    <p class="font-bold text-slate-800 mb-3"><span class="bg-rose-100 text-rose-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">${idx+1}</span>${q.q}</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        ${q.opts.map((opt, oi) => `<button onclick="checkQuizPG(${idx},${oi},this)" class="quiz-option text-left px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-rose-300 hover:bg-rose-50 transition-all duration-200" data-qi="${idx}" data-oi="${oi}"><span class="font-bold text-rose-600 mr-2">${labels[oi]}.</span>${opt}</button>`).join('')}
-                    </div>
-                    <p class="mt-2 text-sm font-bold hidden" id="pg-fb-${idx}"></p>
-                </div>`;
-            });
-            pgContainer.innerHTML = pgHTML;
-
-            // PG Kompleks
-            const pgkContainer = document.getElementById('quiz-pgk-questions');
-            let pgkHTML = '';
-            pgkQuestions.forEach((q, idx) => {
-                pgkHTML += `<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="pgk-q-${idx}">
-                    <p class="font-bold text-slate-800 mb-3"><span class="bg-indigo-100 text-indigo-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">${idx+1}</span>${q.q}</p>
-                    <p class="text-xs text-indigo-500 mb-2">💡 Pilih semua jawaban yang benar</p>
-                    <div class="space-y-2">
-                        ${q.opts.map((opt, oi) => `<div onclick="togglePGKOption(${idx},${oi},this)" class="pgk-option flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-medium" data-pgk-i="${idx}" data-pgk-o="${oi}"><span class="w-5 h-5 rounded border-2 border-slate-300 flex items-center justify-center flex-shrink-0 check-box"></span>${opt}</div>`).join('')}
-                    </div>
-                    <button onclick="submitPGK(${idx})" class="mt-3 bg-indigo-600 text-white font-semibold px-5 py-2 rounded-xl hover:bg-indigo-700 transition-colors">Submit Jawaban</button>
-                    <p class="mt-2 text-sm font-bold hidden" id="pgk-fb-${idx}"></p>
-                </div>`;
-            });
-            pgkContainer.innerHTML = pgkHTML;
-
-            // True/False
-            const tfContainer = document.getElementById('quiz-tf-questions');
-            let tfHTML = '';
-            tfQuestions.forEach((q, idx) => {
-                tfHTML += `<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="tf-q-${idx}">
-                    <p class="font-bold text-slate-800 mb-3"><span class="bg-teal-100 text-teal-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">${idx+1}</span>${q.q}</p>
-                    <div class="flex gap-3">
-                        <button onclick="checkTF(${idx},true,this)" class="tf-option flex-1 py-3 rounded-xl border-2 border-green-300 text-green-700 font-bold hover:bg-green-50 transition-all">✅ Benar</button>
-                        <button onclick="checkTF(${idx},false,this)" class="tf-option flex-1 py-3 rounded-xl border-2 border-red-300 text-red-700 font-bold hover:bg-red-50 transition-all">❌ Salah</button>
-                    </div>
-                    <p class="mt-2 text-sm hidden" id="tf-fb-${idx}"></p>
-                </div>`;
-            });
-            tfContainer.innerHTML = tfHTML;
-
-            // Isian
-            const isianContainer = document.getElementById('quiz-isian-questions');
-            let isianHTML = '';
-            isianQuestions.forEach((q, idx) => {
-                isianHTML += `<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="isian-q-${idx}">
-                    <p class="font-bold text-slate-800 mb-3"><span class="bg-amber-100 text-amber-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">${idx+1}</span>${q.q}</p>
-                    <div class="flex gap-3">
-                        <input type="text" id="isian-input-${idx}" placeholder="Ketik jawabanmu..." class="flex-1 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:border-indigo-400 focus:outline-none transition-colors" onkeypress="if(event.key==='Enter')checkQuizIsian(${idx})">
-                        <button onclick="checkQuizIsian(${idx})" class="bg-indigo-600 text-white font-semibold px-5 py-3 rounded-xl hover:bg-indigo-700 transition-colors whitespace-nowrap">Cek ✓</button>
-                    </div>
-                    <p class="mt-2 text-sm font-bold hidden" id="isian-fb-${idx}"></p>
-                </div>`;
-            });
-            isianContainer.innerHTML = isianHTML;
-        }
-
-        function checkQuizPG(qIdx, oIdx, btnEl) {
-            if (quizAnswers[`pg_${qIdx}`] !== undefined) return;
-            quizAnswers[`pg_${qIdx}`] = oIdx;
-            quizAnswered++;
-
-            const correct = pgQuestions[qIdx].ans;
-            const allBtns = document.querySelectorAll(`.quiz-option[data-qi="${qIdx}"]`);
-            const fbEl = document.getElementById(`pg-fb-${qIdx}`);
-
-            allBtns.forEach(btn => {
-                const oi = parseInt(btn.getAttribute('data-oi'));
-                btn.classList.add('disabled');
-                btn.disabled = true;
-                if (oi === correct) {
-                    btn.classList.remove('border-slate-200','hover:border-rose-300','hover:bg-rose-50');
-                    btn.classList.add('bg-green-100','border-green-500','text-green-800');
-                }
-                if (oi === oIdx && oIdx !== correct) {
-                    btn.classList.add('bg-red-100','border-red-500','text-red-800');
-                }
-            });
-
-            if (oIdx === correct) {
-                quizCorrect++;
-                fbEl.textContent = '✅ Benar!';
-                fbEl.className = 'mt-2 text-sm font-bold text-green-600';
-            } else {
-                quizWrong++;
-                fbEl.textContent = `❌ Salah. Jawaban: ${pgQuestions[qIdx].opts[correct]}`;
-                fbEl.className = 'mt-2 text-sm font-bold text-red-600';
-            }
-            fbEl.classList.remove('hidden');
-            updateQuizProgress();
-        }
-
-        function togglePGKOption(qIdx, oIdx, el) {
-            if (quizAnswers[`pgk_${qIdx}`] !== undefined) return;
-            el.classList.toggle('selected');
-            const checkBox = el.querySelector('.check-box');
-            if (el.classList.contains('selected')) {
-                checkBox.innerHTML = '<svg class="w-3 h-3 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
-                checkBox.classList.add('bg-indigo-100','border-indigo-500');
-            } else {
-                checkBox.innerHTML = '';
-                checkBox.classList.remove('bg-indigo-100','border-indigo-500');
-            }
-        }
-
-        function submitPGK(qIdx) {
-            if (quizAnswers[`pgk_${qIdx}`] !== undefined) return;
-            const selectedOptions = [];
-            document.querySelectorAll(`.pgk-option[data-pgk-i="${qIdx}"].selected`).forEach(el => {
-                selectedOptions.push(parseInt(el.getAttribute('data-pgk-o')));
-            });
-            quizAnswers[`pgk_${qIdx}`] = selectedOptions;
-            quizAnswered++;
-
-            const correct = pgkQuestions[qIdx].ans;
-            const isCorrect = selectedOptions.length === correct.length && selectedOptions.every(v => correct.includes(v));
-
-            const allOpts = document.querySelectorAll(`.pgk-option[data-pgk-i="${qIdx}"]`);
-            allOpts.forEach(opt => {
-                const oi = parseInt(opt.getAttribute('data-pgk-o'));
-                opt.style.pointerEvents = 'none';
-                if (correct.includes(oi)) {
-                    opt.classList.add('bg-green-100','border-green-500','text-green-800');
-                }
-                if (selectedOptions.includes(oi) && !correct.includes(oi)) {
-                    opt.classList.add('bg-red-100','border-red-500','text-red-800');
-                }
-            });
-
-            const fbEl = document.getElementById(`pgk-fb-${qIdx}`);
-            if (isCorrect) {
-                quizCorrect++;
-                fbEl.textContent = '✅ Benar!';
-                fbEl.className = 'mt-2 text-sm font-bold text-green-600';
-            } else {
-                quizWrong++;
-                fbEl.textContent = `❌ Salah. Jawaban yang benar: ${correct.map(i => pgkQuestions[qIdx].opts[i]).join(', ')}`;
-                fbEl.className = 'mt-2 text-sm font-bold text-red-600';
-            }
-            fbEl.classList.remove('hidden');
-            updateQuizProgress();
-        }
-
-        function checkTF(idx, userAnswer, btnEl) {
-            if (quizAnswers[`tf_${idx}`] !== undefined) return;
-            quizAnswers[`tf_${idx}`] = userAnswer;
-            quizAnswered++;
-
-            const correct = tfQuestions[idx].ans;
-            const fbEl = document.getElementById(`tf-fb-${idx}`);
-            const allBtns = btnEl.parentElement.querySelectorAll('.tf-option');
-
-            allBtns.forEach(btn => {
-                btn.style.pointerEvents = 'none';
-            });
-
-            if (userAnswer === correct) {
-                quizCorrect++;
-                btnEl.classList.add('bg-green-100','border-green-500');
-                fbEl.innerHTML = `✅ Benar! <span class="text-slate-600 font-normal">${tfQuestions[idx].explanation}</span>`;
-                fbEl.className = 'mt-2 text-sm font-bold text-green-600';
-            } else {
-                quizWrong++;
-                btnEl.classList.add('bg-red-100','border-red-500');
-                fbEl.innerHTML = `❌ Salah. <span class="text-slate-600 font-normal">${tfQuestions[idx].explanation}</span>`;
-                fbEl.className = 'mt-2 text-sm font-bold text-red-600';
-            }
-            fbEl.classList.remove('hidden');
-            updateQuizProgress();
-        }
-
-        function checkQuizIsian(idx) {
-            if (quizAnswers[`isian_${idx}`] !== undefined) return;
-            const input = document.getElementById(`isian-input-${idx}`);
-            const userAnswer = input.value.trim().toLowerCase();
-            const correctAnswers = isianQuestions[idx].ans.map(a => a.toLowerCase());
-            const fbEl = document.getElementById(`isian-fb-${idx}`);
-
-            quizAnswers[`isian_${idx}`] = userAnswer;
-            quizAnswered++;
-            input.disabled = true;
-
-            const isCorrect = correctAnswers.some(ans => userAnswer === ans || ans.includes(userAnswer) || userAnswer.includes(ans));
-
-            if (isCorrect && userAnswer !== '') {
-                quizCorrect++;
-                input.classList.add('correct');
-                fbEl.textContent = `✅ Benar!`;
-                fbEl.className = 'mt-2 text-sm font-bold text-green-600';
-            } else {
-                quizWrong++;
-                input.classList.add('incorrect');
-                fbEl.textContent = `❌ Jawaban yang benar: ${isianQuestions[idx].ans[0]}`;
-                fbEl.className = 'mt-2 text-sm font-bold text-red-600';
-            }
-            fbEl.classList.remove('hidden');
-            updateQuizProgress();
-        }
-
-        function updateQuizProgress() {
-            const pct = (quizAnswered / totalQuestions) * 100;
-            document.getElementById('quiz-progress-bar').style.width = pct + '%';
-            document.getElementById('quiz-progress-text').textContent = `${quizAnswered} dari ${totalQuestions} soal terjawab`;
-            document.getElementById('quiz-correct-count').textContent = quizCorrect;
-            document.getElementById('quiz-wrong-count').textContent = quizWrong;
-            if (quizAnswered === totalQuestions) showFinalScore();
-        }
-
-        function showFinalScore() {
-            const pct = Math.round((quizCorrect / totalQuestions) * 100);
-            const scoreEl = document.getElementById('final-score');
-            const emojiEl = document.getElementById('final-emoji');
-            const textEl = document.getElementById('final-score-text');
-            const msgEl = document.getElementById('final-score-message');
-
-            textEl.textContent = `${quizCorrect} / ${totalQuestions} (${pct}%)`;
-
-            if (pct === 100) { emojiEl.textContent = '🏆'; msgEl.textContent = 'SEMPURNA! Kamu luar biasa!'; }
-            else if (pct >= 80) { emojiEl.textContent = '🌟'; msgEl.textContent = 'Hebat! Kamu sudah sangat memahami materi!'; }
-            else if (pct >= 60) { emojiEl.textContent = '👍'; msgEl.textContent = 'Bagus! Terus berlatih!'; }
-            else if (pct >= 40) { emojiEl.textContent = '💪'; msgEl.textContent = 'Cukup baik! Pelajari kembali materinya!'; }
-            else { emojiEl.textContent = '📖'; msgEl.textContent = 'Jangan menyerah! Baca ulang materi!'; }
-
-            scoreEl.classList.remove('hidden');
-            scoreEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function resetQuiz() {
-            quizAnswers = {};
-            quizCorrect = 0;
-            quizWrong = 0;
-            quizAnswered = 0;
-            document.getElementById('final-score').classList.add('hidden');
-            renderQuiz();
-            updateQuizProgress();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // ============================================================
-        // ESSAY
-        // ============================================================
-        const essayData = [
-            {
-                q:'Jelaskan langkah-langkah menggambar perspektif satu titik hilang!',
-                answer:`<strong>Langkah Menggambar Perspektif Satu Titik Hilang:</strong><br><br>
-1. <strong>Buat garis horizon</strong> horizontal di tengah kertas<br>
-2. <strong>Tentukan satu titik hilang</strong> (titik pusat) di garis horizon<br>
-3. <strong>Gambar bentuk depan objek</strong> (misalnya persegi/kotak) di bawah atau di atas garis horizon<br>
-4. <strong>Tarik garis dari sudut objek</strong> menuju titik hilang (garis bantu)<br>
-5. <strong>Buat garis vertikal/horizontal</strong> untuk membentuk kedalaman/ketebalan objek<br>
-6. <strong>Tebalkan garis</strong> yang menjadi bentuk akhir dan hapus garis bantu<br>
-7. <strong>Beri arsiran/warna</strong> untuk memperkuat kesan 3 dimensi`
-            },
-            {
-                q:'Jelaskan pengertian dan manfaat warna dari bahan alam!',
-                answer:`<strong>Pengertian Warna dari Bahan Alam:</strong><br><br>
-Warna dari bahan alam adalah <em>zat pewarna yang diperoleh dari bahan-bahan alami</em> seperti tumbuhan (daun, bunga, akar, kulit kayu), buah, dan mineral alam. Pewarna alami telah digunakan sejak zaman dahulu untuk mewarnai kain, makanan, dan karya seni.<br><br>
-<strong>Manfaat Pewarna Alam:</strong><br>
-• <strong>Ramah lingkungan:</strong> tidak mencemari lingkungan<br>
-• <strong>Aman untuk kesehatan:</strong> tidak mengandung bahan kimia berbahaya<br>
-• <strong>Warna unik & natural:</strong> menghasilkan warna yang khas dan alami<br>
-• <strong>Melestarikan tradisi:</strong> menjaga kearifan lokal dalam pembuatan pewarna<br>
-• <strong>Ekonomis:</strong> bahan mudah didapat dari alam sekitar`
-            },
-            {
-                q:'Sebutkan contoh bahan alam dan warna yang dihasilkan!',
-                answer:`<strong>Contoh Bahan Alam dan Warna yang Dihasilkan:</strong><br><br>
-<table class="w-full text-sm border-collapse">
-<thead><tr class="bg-green-100"><th class="p-2 border text-left">Bahan Alam</th><th class="p-2 border text-left">Warna yang Dihasilkan</th></tr></thead>
-<tbody>
-<tr><td class="p-2 border">Kunyit</td><td class="p-2 border">Kuning</td></tr>
-<tr><td class="p-2 border">Indigo / Daun Tom</td><td class="p-2 border">Biru</td></tr>
-<tr><td class="p-2 border">Daun Suji / Pandan</td><td class="p-2 border">Hijau</td></tr>
-<tr><td class="p-2 border">Kayu Secang / Kayu Naga</td><td class="p-2 border">Merah</td></tr>
-<tr><td class="p-2 border">Kulit Manggis</td><td class="p-2 border">Coklat</td></tr>
-<tr><td class="p-2 border">Arang / jelaga</td><td class="p-2 border">Hitam</td></tr>
-<tr><td class="p-2 border">Kapur / tanah liat</td><td class="p-2 border">Putih</td></tr>
-<tr><td class="p-2 border">Bunga Kecombrang</td><td class="p-2 border">Merah muda</td></tr>
-</tbody></table>`
-            },
-            {
-                q:'Jelaskan langkah-langkah membuat poster!',
-                answer:`<strong>Langkah Membuat Poster:</strong><br><br>
-1. <strong>Tentukan tema dan tujuan</strong> poster (lingkungan, kesehatan, pendidikan, dll.)<br>
-2. <strong>Buat slogan/kalimat</strong> yang singkat, padat, dan menarik<br>
-3. <strong>Buat sketsa tata letak (layout)</strong> poster di kertas<br>
-4. <strong>Gambar ilustrasi</strong> yang mendukung pesan/slogan<br>
-5. <strong>Tulis teks/slogan</strong> dengan huruf yang jelas dan mudah dibaca<br>
-6. <strong>Beri warna</strong> yang kontras dan menarik perhatian<br>
-7. <strong>Rapikan dan finishing</strong>: perbaiki detail, tambahkan border jika perlu<br>
-8. <strong>Tempelkan di tempat strategis</strong> yang banyak dilihat orang`
-            },
-            {
-                q:'Jelaskan cara berkarya dengan bahan alam!',
-                answer:`<strong>Cara Berkarya dengan Bahan Alam:</strong><br><br>
-1. <strong>Tentukan karya</strong> yang ingin dibuat (kolase, mozaik, anyaman, ukiran, dll.)<br>
-2. <strong>Kumpulkan bahan alam</strong> yang dibutuhkan (daun, biji, kulit kerang, kayu, bambu, sabut kelapa)<br>
-3. <strong>Bersihkan dan siapkan bahan:</strong> keringkan daun, potong kayu, rendam sabut kelapa<br>
-4. <strong>Buat sketsa/desain</strong> karya yang akan dibuat<br>
-5. <strong>Rakit/susun bahan alam</strong> sesuai desain (lem, anyam, ukir, susun)<br>
-6. <strong>Finishing:</strong> beri pelapis (vernis/lak) jika diperlukan untuk melindungi karya<br>
-7. <strong>Jemur/keringkan</strong> hingga benar-benar kering<br><br>
-<strong>Contoh karya:</strong> kolase daun kering, mozaik biji-bijian, anyaman bambu, ukiran kayu mini, hiasan kulit kerang.`
-            }
-        ];
-
-        function renderEssay() {
-            const container = document.getElementById('essay-questions-container');
-            let html = '';
-            essayData.forEach((q, idx) => {
-                html += `
-                    <div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 hover-lift">
-                        <div class="flex items-start gap-3 mb-4">
-                            <span class="bg-indigo-100 text-indigo-700 rounded-xl w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">E${idx+1}</span>
-                            <p class="font-bold text-slate-800 text-lg leading-relaxed">${q.q}</p>
-                        </div>
-                        <textarea class="w-full border-2 border-slate-200 rounded-xl p-4 text-slate-700 text-sm min-h-[100px] focus:border-indigo-400 focus:outline-none transition-colors resize-y" placeholder="Tulis jawabanmu di sini..." rows="4"></textarea>
-                        <button onclick="toggleEssayAnswer(${idx})" id="essay-btn-${idx}" class="mt-4 flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md hover:from-indigo-600 hover:to-indigo-700 transition-all hover-lift">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            Lihat Kunci Jawaban
-                        </button>
-                        <div id="essay-answer-${idx}" class="essay-answer">
-                            <div class="bg-gradient-to-r from-rose-50 to-indigo-50 border-2 border-indigo-200 rounded-xl p-5 mt-3">
-                                <div class="flex items-center gap-2 mb-3">
-                                    <span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold">KUNCI JAWABAN</span>
-                                </div>
-                                <p class="text-sm text-slate-800 leading-relaxed">${q.answer}</p>
-                            </div>
-                        </div>
-                    </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        function toggleEssayAnswer(idx) {
-            const answerEl = document.getElementById(`essay-answer-${idx}`);
-            const btnEl = document.getElementById(`essay-btn-${idx}`);
-            if (answerEl.classList.contains('show')) {
-                answerEl.classList.remove('show');
-                btnEl.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> Lihat Kunci Jawaban`;
-            } else {
-                answerEl.classList.add('show');
-                btnEl.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg> Sembunyikan Kunci Jawaban`;
-            }
-        }
-
-        // ============================================================
-        // INITIALIZE
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', function() {
-            updateFlashcard();
-            initMatchingGame();
-            renderQuiz();
-            renderEssay();
-        });
-    </script>
+<body class="bg-gradient-to-br from-slate-50 via-rose-50/20 to-indigo-50/20 min-h-screen font-sans">
+
+<header class="relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-rose-600 via-purple-600 to-indigo-600"></div>
+<div class="absolute inset-0 opacity-10">
+<div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+<div class="absolute bottom-5 right-20 w-48 h-48 bg-white rounded-full blur-3xl"></div>
+</div>
+<div class="relative max-w-6xl mx-auto px-4 py-8 text-center text-white">
+<div class="inline-flex items-center gap-3 mb-3">
+<div class="bg-white/20 backdrop-blur-sm p-3 rounded-2xl">
+<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+</div>
+<div class="text-left">
+<h1 class="text-3xl md:text-4xl font-bold">ASAT SBK Kelas 8</h1>
+<p class="text-rose-100 text-lg">Seni Budaya &amp; Keterampilan</p>
+</div>
+</div>
+<div class="flex flex-wrap justify-center gap-3 mt-4">
+<span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">🖼️ Perspektif &amp; Ilustrasi</span>
+<span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">📊 Poster &amp; Ragam Hias</span>
+<span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">️ Ragam Hias Nusantara &amp; Seni Lukis</span>
+<span class="bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm">🌿 Pewarna &amp; Bahan Alam</span>
+</div>
+</div>
+</header>
+
+<nav class="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-slate-200">
+<div class="max-w-6xl mx-auto px-4">
+<div class="flex overflow-x-auto gap-0">
+<button onclick="switchTab('materi')" id="tab-materi" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-[3px] border-rose-500 text-rose-700 bg-rose-50/50"> Materi</button>
+<button onclick="switchTab('flashcard')" id="tab-flashcard" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-[3px] border-transparent text-slate-500 hover:text-indigo-600"> Flashcard</button>
+<button onclick="switchTab('matching')" id="tab-matching" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-[3px] border-transparent text-slate-500 hover:text-indigo-600"> Menjodohkan</button>
+<button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-[3px] border-transparent text-slate-500 hover:text-indigo-600">🎯 Kuis</button>
+<button onclick="switchTab('essay')" id="tab-essay" class="tab-btn flex-shrink-0 flex items-center gap-2 px-3 py-3.5 text-xs md:text-sm font-semibold transition-all duration-300 border-b-[3px] border-transparent text-slate-500 hover:text-indigo-600">✍️ Essay</button>
+</div>
+</div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 py-6">
+
+<!-- ==================== TAB 1: MATERI ==================== -->
+<div id="content-materi" class="tab-content active">
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+<div class="bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl p-4 text-white hover-lift"><p class="text-2xl font-bold">Bab 1</p><p class="text-rose-100 text-xs mt-1">Perspektif &amp; Ilustrasi</p></div>
+<div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-4 text-white hover-lift"><p class="text-2xl font-bold">Bab 2</p><p class="text-blue-100 text-xs mt-1">Poster &amp; Ragam Hias</p></div>
+<div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-4 text-white hover-lift"><p class="text-2xl font-bold">Bab 3</p><p class="text-amber-100 text-xs mt-1">Ragam Hias Nusantara &amp; Seni Lukis</p></div>
+<div class="bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl p-4 text-white hover-lift"><p class="text-2xl font-bold">Bab 4</p><p class="text-emerald-100 text-xs mt-1">Pewarna &amp; Bahan Alam</p></div>
+</div>
+
+<!-- BAB 1 -->
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center text-2xl">🖼️</div>
+<div><h2 class="text-2xl font-bold text-slate-800">Bab 1 — Perspektif &amp; Gambar Ilustrasi</h2>
+<p class="text-slate-500 text-sm">Titik hilang, gambar ilustrasi, dan melukis suasana</p></div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-rose-100 text-rose-700 p-2 rounded-lg">📐</span> Perspektif (Titik Hilang)</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+<div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-5">
+<h4 class="font-bold text-rose-700 text-lg mb-2">Perspektif 1 Titik Hilang</h4>
+<p class="text-sm text-slate-700 mb-2">Menggunakan <strong>satu titik hilang</strong> pada garis horizon. Semua garis menjauh menuju satu titik.</p>
+<div class="bg-white rounded-lg p-3 text-sm">
+<p class="text-rose-600 font-medium">Ciri-ciri:</p>
+<ul class="text-slate-600 mt-1 space-y-1 ml-4 list-disc">
+<li>Satu titik hilang di tengah</li><li>Garis horizon lurus horizontal</li><li>Cocok untuk jalan lurus, lorong, rel kereta</li>
+</ul></div></div>
+<div class="bg-indigo-50 border-2 border-indigo-200 rounded-2xl p-5">
+<h4 class="font-bold text-indigo-700 text-lg mb-2">Perspektif 2 Titik Hilang</h4>
+<p class="text-sm text-slate-700 mb-2">Menggunakan <strong>dua titik hilang</strong> pada garis horizon. Sudut objek di depan pengamat.</p>
+<div class="bg-white rounded-lg p-3 text-sm">
+<p class="text-indigo-600 font-medium">Ciri-ciri:</p>
+<ul class="text-slate-600 mt-1 space-y-1 ml-4 list-disc">
+<li>Dua titik hilang di kiri dan kanan</li><li>Sudut objek menghadap pengamat</li><li>Cocok untuk gedung, kotak dari sudut</li>
+</ul></div></div>
+</div>
+
+<div class="bg-teal-50 rounded-xl p-4">
+<h4 class="font-bold text-teal-700 mb-2">🎨 Langkah Menggambar Perspektif 1 Titik Hilang:</h4>
+<div class="space-y-2">
+<div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span><p class="text-sm text-slate-700">Buat garis horizon horizontal di tengah kertas</p></div>
+<div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span><p class="text-sm text-slate-700">Tentukan satu titik hilang di garis horizon</p></div>
+<div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span><p class="text-sm text-slate-700">Gambar bentuk depan objek (persegi/kotak)</p></div>
+<div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span><p class="text-sm text-slate-700">Tarik garis dari sudut objek menuju titik hilang</p></div>
+<div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">5</span><p class="text-sm text-slate-700">Buat garis vertikal/horizontal untuk kedalaman</p></div>
+<div class="flex items-start gap-3"><span class="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">6</span><p class="text-sm text-slate-700">Tebalkan garis akhir dan hapus garis bantu</p></div>
+</div></div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-purple-100 text-purple-700 p-2 rounded-lg">✏️</span> Gambar Ilustrasi</h3>
+<div class="bg-purple-50 rounded-xl p-4 mb-4">
+<p class="text-sm text-slate-700"><strong>Ilustrasi</strong> adalah gambar yang berfungsi untuk <strong>menerangkan, menjelaskan, atau memperindah</strong> suatu teks atau cerita.</p></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-slate-50 rounded-xl p-4">
+<h4 class="font-bold text-slate-700 mb-2">📌 Fungsi Ilustrasi:</h4>
+<ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
+<li>Memperjelas maksud cerita/teks</li><li>Menarik perhatian pembaca</li><li>Memperindah tampilan buku</li><li>Membantu memahami alur cerita</li>
+</ul></div>
+<div class="bg-slate-50 rounded-xl p-4">
+<h4 class="font-bold text-slate-700 mb-2"> Jenis Ilustrasi:</h4>
+<ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
+<li>Ilustrasi cerita: tokoh &amp; adegan</li><li>Ilustrasi ilmu pengetahuan: gambar teknis</li><li>Karikatur: gambar lucu/berlebihan</li><li>Komik: gambar cerita berurutan</li><li>Vignette: gambar pengisi halaman</li>
+</ul></div>
+</div></div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-amber-100 text-amber-700 p-2 rounded-lg">🌅</span> Melukis Suasana &amp; Unsur Warna</h3>
+<p class="text-sm text-slate-600 mb-3">Melukis suasana menggambarkan <strong>situasi, keadaan, atau atmosfer</strong> tertentu menggunakan unsur warna.</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<div class="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-3 text-center">
+<div class="text-3xl mb-1">🌊</div><p class="text-xs font-bold text-blue-700">Suasana Pagi</p><p class="text-xs text-slate-500">Kuning, biru muda, hijau muda</p></div>
+<div class="bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200 rounded-xl p-3 text-center">
+<div class="text-3xl mb-1">🌅</div><p class="text-xs font-bold text-amber-700">Suasana Sore</p><p class="text-xs text-slate-500">Oranye, merah, coklat keemasan</p></div>
+<div class="bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-xl p-3 text-center">
+<div class="text-3xl mb-1">🌙</div><p class="text-xs font-bold text-indigo-700">Suasana Malam</p><p class="text-xs text-slate-500">Biru tua, ungu, hitam, perak</p></div>
+</div></div>
+</div>
+
+<!-- BAB 2 -->
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">📊</div>
+<div><h2 class="text-2xl font-bold text-slate-800">Bab 2 — Poster &amp; Ragam Hias</h2>
+<p class="text-slate-500 text-sm">Membuat poster, motif ragam hias, dan ukurannya</p></div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-blue-100 text-blue-700 p-2 rounded-lg">📌</span> Poster</h3>
+<div class="bg-blue-50 rounded-xl p-4 mb-4">
+<p class="text-sm text-slate-700"><strong>Poster</strong> adalah media publikasi yang terdiri dari tulisan, gambar, atau keduanya dengan tujuan <strong>memberikan informasi kepada khalayak ramai</strong>.</p></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+<div class="bg-slate-50 rounded-xl p-4">
+<h4 class="font-bold text-slate-700 mb-2">✅ Ciri Poster yang Baik:</h4>
+<ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
+<li>Bahasa singkat, jelas, menarik</li><li>Gambar mendukung pesan</li><li>Warna kontras &amp; menarik</li><li>Slogan mudah diingat</li><li>Informasi jelas</li><li>Ditempatkan strategis</li>
+</ul></div>
+<div class="bg-slate-50 rounded-xl p-4">
+<h4 class="font-bold text-slate-700 mb-2"> Unsur Penting Poster:</h4>
+<ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
+<li>Gambar/Ilustrasi</li><li>Teks/Slogan</li><li>Warna kontras</li><li>Tata letak rapi</li><li>Informasi lengkap</li>
+</ul></div>
+</div>
+<div class="bg-amber-50 rounded-xl p-4">
+<h4 class="font-bold text-amber-700 mb-2">📐 Langkah Membuat Poster:</h4>
+<div class="space-y-2">
+<div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span><p class="text-sm text-slate-700">Tentukan tema dan tujuan</p></div>
+<div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span><p class="text-sm text-slate-700">Buat slogan singkat dan menarik</p></div>
+<div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span><p class="text-sm text-slate-700">Buat sketsa tata letak</p></div>
+<div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">4</span><p class="text-sm text-slate-700">Gambar ilustrasi dan tulis teks</p></div>
+<div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">5</span><p class="text-sm text-slate-700">Beri warna kontras</p></div>
+<div class="flex items-start gap-3"><span class="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">6</span><p class="text-sm text-slate-700">Finishing: rapikan dan detail</p></div>
+</div></div>
+<div class="bg-green-50 rounded-xl p-4 mt-4">
+<h4 class="font-bold text-green-700 mb-2">🔤 Contoh Slogan:</h4>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+<div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Lingkungan:</span> "Buanglah Sampah pada Tempatnya!"</div>
+<div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Kesehatan:</span> "Cuci Tangan, Lindungi Diri!"</div>
+<div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Pendidikan:</span> "Rajin Belajar, Raih Prestasi!"</div>
+<div class="bg-white rounded-lg p-2 text-sm"><span class="text-green-600 font-bold">Lalu Lintas:</span> "Taati Rambu, Selamat di Jalan!"</div>
+</div></div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-indigo-100 text-indigo-700 p-2 rounded-lg"></span> Ragam Hias</h3>
+<div class="bg-indigo-50 rounded-xl p-4 mb-4">
+<p class="text-sm text-slate-700"><strong>Ragam hias</strong> (ornamen) adalah bentuk dekoratif untuk <strong>memperindah</strong> benda. Berupa motif flora, fauna, geometris, atau figuratif.</p></div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-slate-50 rounded-xl p-4"><h4 class="font-bold text-slate-700 mb-2">🌿 Motif Flora:</h4><p class="text-sm text-slate-600">Tumbuhan, bunga, daun. Contoh: bunga teratai, sulur.</p></div>
+<div class="bg-slate-50 rounded-xl p-4"><h4 class="font-bold text-slate-700 mb-2">🐾 Motif Fauna:</h4><p class="text-sm text-slate-600">Hewan: burung, ikan, kupu-kupu.</p></div>
+<div class="bg-slate-50 rounded-xl p-4"><h4 class="font-bold text-slate-700 mb-2"> Motif Geometris:</h4><p class="text-sm text-slate-600">Bangun geometris: garis, lingkaran, segitiga. Contoh: kawung, tumpal, meander.</p></div>
+<div class="bg-slate-50 rounded-xl p-4"><h4 class="font-bold text-slate-700 mb-2">👤 Motif Figuratif:</h4><p class="text-sm text-slate-600">Manusia atau makhluk hidup digayakan. Contoh: wayang.</p></div>
+</div></div>
+</div>
+
+<!-- BAB 3 -->
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center text-2xl">🏛️</div>
+<div><h2 class="text-2xl font-bold text-slate-800">Bab 3 — Ragam Hias Nusantara &amp; Seni Lukis</h2>
+<p class="text-slate-500 text-sm">Motif daerah, aliran seni lukis, dan tokoh pelukis</p></div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-amber-100 text-amber-700 p-2 rounded-lg">🇮🇩</span> Ragam Hias Nusantara</h3>
+<p class="text-sm text-slate-600 mb-4">Setiap daerah memiliki motif khas yang mencerminkan budaya lokal.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3"><p class="font-bold text-amber-700 text-sm">🏝️ Jawa</p><p class="text-xs text-slate-600 mt-1">Batik: parang, kawung, mega mendung</p></div>
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3"><p class="font-bold text-amber-700 text-sm"> Bali</p><p class="text-xs text-slate-600 mt-1">Ceplok, patra, ukiran bunga teratai</p></div>
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3"><p class="font-bold text-amber-700 text-sm">🐉 Kalimantan</p><p class="text-xs text-slate-600 mt-1">Mandala, motif dayak, burung enggang</p></div>
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3"><p class="font-bold text-amber-700 text-sm">🏔️ Papua</p><p class="text-xs text-slate-600 mt-1">Asmat, tifa, perisai ukiran khas</p></div>
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3"><p class="font-bold text-amber-700 text-sm">🌊 Sulawesi</p><p class="text-xs text-slate-600 mt-1">Toraja, pa'tedong, tenun khas</p></div>
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3"><p class="font-bold text-amber-700 text-sm"> Sumatera</p><p class="text-xs text-slate-600 mt-1">Songket, ukiran rumah gadang</p></div>
+</div></div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-purple-100 text-purple-700 p-2 rounded-lg"></span> Seni Lukis — Aliran &amp; Tokoh</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
+<h4 class="font-bold text-purple-700 mb-2"> Aliran Seni Lukis:</h4>
+<ul class="text-sm text-slate-600 space-y-2">
+<li><strong>Realisme:</strong> sesuai kenyataan. Tokoh: Basuki Abdullah, S. Sudjojono</li>
+<li><strong>Ekspresionisme:</strong> emosi pelukis. Tokoh: Affandi</li>
+<li><strong>Impresionisme:</strong> kesan cahaya &amp; suasana</li>
+<li><strong>Abstrak:</strong> bentuk bebas, tidak nyata</li>
+<li><strong>Surealisme:</strong> dunia mimpi/imajinasi</li>
+<li><strong>Naturalisme:</strong> keindahan alam</li>
+</ul></div>
+<div class="bg-purple-50 border border-purple-200 rounded-xl p-4">
+<h4 class="font-bold text-purple-700 mb-2">🎨 Tokoh Pelukis Indonesia:</h4>
+<ul class="text-sm text-slate-600 space-y-2">
+<li><strong>Raden Saleh</strong> — "Penangkapan Pangeran Diponegoro" (Romantisme)</li>
+<li><strong>Affandi</strong> — "Kakek Tua", "Potret Diri" (Ekspresionisme)</li>
+<li><strong>Basuki Abdullah</strong> — "Penari Bali" (Realisme)</li>
+<li><strong>S. Sudjojono</strong> — "Di Depan Kelambu Terbuka"</li>
+<li><strong>Kartika Affandi</strong> — karya ekspresionis</li>
+<li><strong>Popo Iskandar</strong> — "Kucing"</li>
+</ul></div>
+</div></div>
+</div>
+
+<!-- BAB 4 -->
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-5">
+<div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-2xl">🌿</div>
+<div><h2 class="text-2xl font-bold text-slate-800">Bab 4 — Pewarna Alam &amp; Bahan Alam</h2>
+<p class="text-slate-500 text-sm">Pewarna dari bahan alam dan berkarya dengan bahan alam</p></div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-5">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-emerald-100 text-emerald-700 p-2 rounded-lg">🌈</span> Pewarna dari Bahan Alam</h3>
+<div class="bg-emerald-50 rounded-xl p-4 mb-4">
+<p class="text-sm text-slate-700"><strong>Pewarna alami</strong> diperoleh dari tumbuhan, buah, akar, kulit kayu. Lebih ramah lingkungan dari pewarna sintetis.</p>
+<p class="text-sm text-slate-700 mt-2"><strong>Manfaat:</strong> ramah lingkungan, aman untuk kesehatan, warna natural, melestarikan tradisi.</p></div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+<div class="bg-red-50 border border-red-200 rounded-xl p-3 text-center"><div class="w-10 h-10 bg-red-400 rounded-full mx-auto mb-2"></div><p class="text-xs font-bold text-red-700">Kayu Secang</p><p class="text-xs text-slate-500">→ Merah</p></div>
+<div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-center"><div class="w-10 h-10 bg-amber-400 rounded-full mx-auto mb-2"></div><p class="text-xs font-bold text-amber-700">Kunyit</p><p class="text-xs text-slate-500">→ Kuning</p></div>
+<div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center"><div class="w-10 h-10 bg-emerald-500 rounded-full mx-auto mb-2"></div><p class="text-xs font-bold text-emerald-700">Daun Suji</p><p class="text-xs text-slate-500">→ Hijau</p></div>
+<div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-center"><div class="w-10 h-10 bg-blue-500 rounded-full mx-auto mb-2"></div><p class="text-xs font-bold text-blue-700">Indigo/Tom</p><p class="text-xs text-slate-500">→ Biru</p></div>
+<div class="bg-stone-100 border border-stone-300 rounded-xl p-3 text-center"><div class="w-10 h-10 bg-stone-600 rounded-full mx-auto mb-2"></div><p class="text-xs font-bold text-stone-700">Kulit Manggis</p><p class="text-xs text-slate-500">→ Coklat</p></div>
+</div></div>
+
+<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+<h3 class="font-bold text-xl text-slate-800 mb-4 flex items-center gap-2"><span class="bg-teal-100 text-teal-700 p-2 rounded-lg"></span> Berkarya dengan Bahan Alam</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
+<h4 class="font-bold text-teal-700 mb-2">Contoh Bahan Alam:</h4>
+<ul class="text-sm text-slate-600 space-y-1 ml-4 list-disc">
+<li>Daun kering → kolase &amp; mozaik</li>
+<li>Biji-bijian → hiasan &amp; kerajinan</li>
+<li>Kulit kerang → aksesoris &amp; hiasan</li>
+<li>Batang kayu → ukiran &amp; patung mini</li>
+<li>Sabut kelapa → anyaman</li>
+<li>Bambu → anyaman &amp; furniture mini</li>
+</ul></div>
+<div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
+<h4 class="font-bold text-teal-700 mb-2">🔨 Langkah Berkarya:</h4>
+<div class="space-y-2">
+<div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">1</span><p class="text-sm text-slate-700">Tentukan karya</p></div>
+<div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">2</span><p class="text-sm text-slate-700">Kumpulkan bahan alam</p></div>
+<div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">3</span><p class="text-sm text-slate-700">Bersihkan &amp; siapkan bahan</p></div>
+<div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">4</span><p class="text-sm text-slate-700">Buat sketsa/desain</p></div>
+<div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">5</span><p class="text-sm text-slate-700">Rakit/susun bahan</p></div>
+<div class="flex items-start gap-2"><span class="bg-teal-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shrink-0">6</span><p class="text-sm text-slate-700">Finishing: beri pelapis</p></div>
+</div></div>
+</div></div>
+</div>
+
+</div>
+
+<!-- ==================== TAB 2: FLASHCARD ==================== -->
+<div id="content-flashcard" class="tab-content">
+<div class="text-center mb-6">
+<h2 class="text-2xl font-bold text-slate-800 mb-2">🃏 Flashcard Interaktif</h2>
+<p class="text-slate-600">Klik kartu untuk membalik • Navigasi untuk berpindah</p>
+</div>
+<div class="max-w-2xl mx-auto">
+<div class="flex justify-center gap-2 mb-4 flex-wrap" id="card-dots"></div>
+<div class="text-center mb-4"><span id="card-counter" class="inline-block bg-indigo-100 text-indigo-700 font-bold px-5 py-2 rounded-full text-sm">Kartu 1 dari 15</span></div>
+<div class="flip-card w-full h-80 cursor-pointer" id="flashcard" onclick="flipCard()">
+<div class="flip-card-inner" id="flashcard-inner">
+<div class="flip-card-front bg-gradient-to-br from-rose-500 via-purple-500 to-indigo-600 text-white shadow-2xl">
+<div class="text-5xl mb-4" id="card-icon"></div>
+<p class="text-xs uppercase tracking-widest mb-3 opacity-75">Pertanyaan / Istilah</p>
+<h3 class="text-xl md:text-2xl font-bold text-center px-6 leading-relaxed" id="card-front-text">Memuat...</h3>
+<p class="text-sm mt-5 opacity-60">👆 Klik untuk membalik</p>
+</div>
+<div class="flip-card-back bg-gradient-to-br from-slate-700 to-slate-900 text-white shadow-2xl">
+<div class="text-3xl mb-3">💡</div>
+<p class="text-xs uppercase tracking-widest mb-3 opacity-75">Jawaban / Penjelasan</p>
+<p class="text-base md:text-lg text-center px-6 leading-relaxed whitespace-pre-line" id="card-back-text">Memuat...</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-center gap-4 mt-6">
+<button onclick="prevCard()" class="flex items-center gap-2 bg-white text-slate-700 font-semibold px-5 py-2.5 rounded-xl shadow-md hover:bg-slate-50 border border-slate-200 hover-lift">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>Sebelumnya</button>
+<button onclick="shuffleCards()" class="flex items-center gap-2 bg-teal-100 text-teal-700 font-semibold px-5 py-2.5 rounded-xl shadow-md hover:bg-teal-200 hover-lift">🔀 Acak</button>
+<button onclick="nextCard()" class="flex items-center gap-2 bg-indigo-600 text-white font-semibold px-5 py-2.5 rounded-xl shadow-md hover:bg-indigo-700 hover-lift">Selanjutnya<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 3: MENJODOHKAN ==================== -->
+<div id="content-matching" class="tab-content">
+<div class="text-center mb-6">
+<h2 class="text-2xl font-bold text-slate-800 mb-2">🔗 Permainan Menjodohkan</h2>
+<p class="text-slate-600">Pilih istilah di kiri, lalu pilih pasangannya di kanan.</p>
+</div>
+<div class="max-w-4xl mx-auto">
+<div class="mb-4">
+<div class="flex justify-between text-sm text-slate-600 mb-1"><span>Progress</span><span id="match-progress-text">0 dari 10 pasang</span></div>
+<div class="w-full bg-slate-200 rounded-full h-3"><div id="match-progress-bar" class="progress-fill bg-gradient-to-r from-rose-500 to-indigo-500 h-3 rounded-full" style="width:0%"></div></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-3"><h3 class="font-bold text-slate-700 text-center mb-2"> Istilah</h3><div id="match-left" class="space-y-3"></div></div>
+<div class="space-y-3"><h3 class="font-bold text-slate-700 text-center mb-2">💡 Jawaban</h3><div id="match-right" class="space-y-3"></div></div>
+</div>
+<div class="text-center mt-6"><button onclick="resetMatching()" class="bg-white text-slate-700 font-semibold px-6 py-2.5 rounded-xl shadow-md hover:bg-slate-50 border border-slate-200 hover-lift">🔄 Mulai Ulang</button></div>
+<div id="match-success" class="hidden mt-4 bg-gradient-to-r from-emerald-500 to-green-500 rounded-2xl p-6 text-white text-center shadow-lg">
+<div class="text-4xl mb-2">🎉</div><h3 class="text-2xl font-bold">Hebat! Semua pasangan benar!</h3>
+</div>
+</div>
+</div>
+
+<!-- ==================== TAB 4: KUIS ==================== -->
+<div id="content-quiz" class="tab-content">
+<div class="text-center mb-6">
+<h2 class="text-2xl font-bold text-slate-800 mb-2"> Kuis Interaktif</h2>
+<p class="text-slate-600">45 soal berdasarkan kisi-kisi ASAT SBK Kelas 8</p>
+</div>
+
+<div class="mb-6 bg-white rounded-2xl shadow-md border border-slate-200 p-4">
+<div class="flex justify-between text-sm text-slate-600 mb-2"><span>Progress Kuis</span><span id="quiz-progress-text">0 dari 30 soal terjawab</span></div>
+<div class="w-full bg-slate-200 rounded-full h-3"><div id="quiz-progress-bar" class="progress-fill bg-gradient-to-r from-rose-500 to-indigo-500 h-3 rounded-full" style="width:0%"></div></div>
+<div class="flex gap-4 mt-3 text-sm">
+<span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Benar: <strong id="quiz-correct-count">0</strong></span>
+<span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-red-500"></span> Salah: <strong id="quiz-wrong-count">0</strong></span>
+</div>
+</div>
+
+<div class="mb-8">
+<h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-lg text-sm">Pilihan Ganda</span>10 Soal</h3>
+<div id="quiz-pg-questions" class="space-y-5"></div>
+</div>
+
+<div class="mb-8">
+<h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg text-sm">PG Kompleks</span>10 Soal <span class="text-sm font-normal text-slate-500">(pilih semua yang benar)</span></h3>
+<div id="quiz-pgk-questions" class="space-y-5"></div>
+</div>
+
+<div class="mb-8">
+<h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-lg text-sm">Benar / Salah</span>5 Soal</h3>
+<div id="quiz-tf-questions" class="space-y-5"></div>
+</div>
+
+<div class="mb-8">
+<h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-lg text-sm">Isian Singkat</span>5 Soal</h3>
+<div id="quiz-isian-questions" class="space-y-5"></div>
+</div>
+
+<div id="final-score" class="hidden bg-gradient-to-r from-rose-500 to-indigo-600 rounded-2xl p-8 text-white text-center shadow-2xl">
+<div class="text-6xl mb-4" id="final-emoji"></div>
+<h3 class="text-3xl font-bold mb-2">Skor Akhir</h3>
+<p class="text-5xl font-bold" id="final-score-text">0</p>
+<p class="text-lg mt-2 opacity-90" id="final-score-message"></p>
+<button onclick="resetQuiz()" class="mt-4 bg-white/20 backdrop-blur-sm text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-white/30 transition-colors">🔄 Ulangi Kuis</button>
+</div>
+</div>
+
+<!-- ==================== TAB 5: ESSAY ==================== -->
+<div id="content-essay" class="tab-content">
+<div class="text-center mb-6">
+<h2 class="text-2xl font-bold text-slate-800 mb-2">✍️ Soal Essay</h2>
+<p class="text-slate-600">Tulis jawabanmu, lalu klik "Lihat Kunci Jawaban" untuk membandingkan.</p>
+</div>
+<div id="essay-questions-container" class="max-w-3xl mx-auto space-y-6"></div>
+</div>
+
+</main>
+
+<footer class="bg-slate-800 text-slate-400 text-center py-6 mt-8">
+<p class="text-sm">© 2026 ASAT SBK Kelas 8 — Seni Budaya &amp; Keterampilan</p>
+<p class="text-xs mt-1">Media Pembelajaran Interaktif untuk Siswa SMP</p>
+</footer>
+
+<script>
+// ============================================================
+// TAB NAVIGATION
+// ============================================================
+function switchTab(tabName) {
+  var tabs = document.querySelectorAll('.tab-content');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  document.getElementById('content-' + tabName).classList.add('active');
+
+  var btns = document.querySelectorAll('.tab-btn');
+  for (var j = 0; j < btns.length; j++) {
+    btns[j].classList.remove('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
+    btns[j].classList.add('border-transparent', 'text-slate-500');
+  }
+  var activeBtn = document.getElementById('tab-' + tabName);
+  activeBtn.classList.remove('border-transparent', 'text-slate-500');
+  activeBtn.classList.add('border-rose-500', 'text-rose-700', 'bg-rose-50/50');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// FLASHCARD
+// ============================================================
+var flashcardData = [
+  {icon:'📐',front:'Apa itu perspektif satu titik hilang?',back:'Perspektif yang menggunakan SATU titik hilang pada garis horizon. Semua garis menjauh menuju satu titik. Cocok untuk menggambar jalan lurus, lorong, atau rel kereta api.'},
+  {icon:'📐',front:'Apa ciri perspektif dua titik hilang?',back:'Menggunakan DUA titik hilang di kiri dan kanan garis horizon. Sudut objek di depan pengamat. Cocok untuk menggambar gedung atau kotak dari sudut.'},
+  {icon:'📍',front:'Apa itu garis horizon?',back:'Garis khayal setinggi mata pengamat yang memisahkan langit dan tanah/laut. Garis horizon menjadi acuan dalam menggambar perspektif.'},
+  {icon:'✏️',front:'Apa fungsi gambar ilustrasi?',back:'Untuk menerangkan, menjelaskan, atau memperindah suatu teks/cerita. Ilustrasi membantu pembaca memahami isi cerita dengan lebih mudah dan menarik.'},
+  {icon:'',front:'Sebutkan jenis-jenis ilustrasi!',back:'1) Ilustrasi cerita (tokoh & adegan)\n2) Ilustrasi ilmu pengetahuan (gambar teknis)\n3) Karikatur (gambar lucu/berlebihan)\n4) Komik (gambar cerita berurutan)\n5) Vignette (pengisi halaman kosong)'},
+  {icon:'',front:'Apa itu poster?',back:'Media publikasi terdiri dari tulisan, gambar, atau kombinasi keduanya dengan tujuan memberikan informasi kepada khalayak ramai. Biasanya ditempel di tempat umum.'},
+  {icon:'✅',front:'Sebutkan ciri poster yang baik!',back:'1) Bahasa singkat, jelas, menarik\n2) Gambar mendukung pesan\n3) Warna kontras dan menarik\n4) Slogan mudah diingat\n5) Informasi jelas\n6) Ditempatkan strategis'},
+  {icon:'',front:'Apa itu ragam hias?',back:'Bentuk-bentuk dekoratif (ornamen) yang digunakan untuk memperindah suatu benda. Ragam hias berupa motif flora, fauna, geometris, atau figuratif.'},
+  {icon:'🌺',front:'Apa motif flora?',back:'Motif berbentuk tumbuhan, bunga, daun, atau akar. Sering ditemukan pada kain batik, ukiran kayu, dan tenun. Contoh: motif bunga teratai, motif daun, motif sulur.'},
+  {icon:'',front:'Apa motif geometris?',back:'Motif berbentuk bangun geometris seperti garis, lingkaran, segitiga, persegi, atau zigzag. Contoh: kawung, tumpal, meander, pilin.'},
+  {icon:'',front:'Apa itu aliran realisme?',back:'Aliran seni lukis yang melukis objek sesuai kenyataan/asli. Objek digambarkan secara detail dan mirip aslinya. Tokoh: Basuki Abdullah, S. Sudjojono.'},
+  {icon:'🎨',front:'Apa itu aliran ekspresionisme?',back:'Aliran seni lukis yang mengekspresikan emosi dan perasaan pelukis. Gambar tidak harus mirip aslinya, tetapi conveying emosi. Tokoh: Affandi.'},
+  {icon:'🌈',front:'Contoh pewarna alami dan warnanya?',back:'• Kunyit → Kuning\n• Indigo/Tom → Biru\n• Daun Suji → Hijau\n• Kayu Secang → Merah\n• Kulit Manggis → Coklat'},
+  {icon:'🍃',front:'Contoh bahan alam untuk berkarya?',back:'• Daun kering → kolase & mozaik\n• Biji-bijian → hiasan & kerajinan\n• Kulit kerang → aksesoris\n• Batang kayu → ukiran & patung\n• Sabut kelapa → anyaman\n• Bambu → anyaman'},
+  {icon:'👨🎨',front:'Siapa Raden Saleh dan karyanya?',back:'Raden Saleh adalah pelukis Indonesia beraliran Romantisme. Karya terkenal: "Penangkapan Pangeran Diponegoro". Ia dianggap pelukis modern Indonesia pertama.'}
+];
+
+var currentCardIndex = 0;
+var isFlipped = false;
+
+function updateFlashcard() {
+  var card = flashcardData[currentCardIndex];
+  document.getElementById('card-icon').textContent = card.icon;
+  document.getElementById('card-front-text').textContent = card.front;
+  document.getElementById('card-back-text').textContent = card.back;
+  document.getElementById('card-counter').textContent = 'Kartu ' + (currentCardIndex + 1) + ' dari ' + flashcardData.length;
+  isFlipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  updateCardDots();
+}
+
+function updateCardDots() {
+  var container = document.getElementById('card-dots');
+  var html = '';
+  for (var i = 0; i < flashcardData.length; i++) {
+    var cls = i === currentCardIndex ? 'bg-indigo-500 scale-125' : 'bg-slate-300 hover:bg-slate-400';
+    html += '<div class="w-3 h-3 rounded-full transition-all cursor-pointer ' + cls + '" onclick="goToCard(' + i + ')"></div>';
+  }
+  container.innerHTML = html;
+}
+
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped', isFlipped);
+}
+
+function nextCard() { currentCardIndex = (currentCardIndex + 1) % flashcardData.length; updateFlashcard(); }
+function prevCard() { currentCardIndex = (currentCardIndex - 1 + flashcardData.length) % flashcardData.length; updateFlashcard(); }
+function goToCard(idx) { currentCardIndex = idx; updateFlashcard(); }
+function shuffleCards() {
+  for (var i = flashcardData.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = flashcardData[i]; flashcardData[i] = flashcardData[j]; flashcardData[j] = tmp;
+  }
+  currentCardIndex = 0; updateFlashcard();
+}
+
+// ============================================================
+// MATCHING GAME (10 pasang)
+// ============================================================
+var matchingPairs = [
+  {left:'Perspektif 1 titik hilang',right:'Satu titik pada garis horizon, cocok untuk jalan lurus'},
+  {left:'Perspektif 2 titik hilang',right:'Dua titik di kiri-kanan horizon, sudut objek di depan'},
+  {left:'Garis horizon',right:'Garis khayal setinggi mata pengamat'},
+  {left:'Ilustrasi',right:'Gambar untuk menerangkan/memperindah teks'},
+  {left:'Poster',right:'Media publikasi untuk informasi ke khalayak ramai'},
+  {left:'Motif flora',right:'Motif berbentuk tumbuhan, bunga, daun'},
+  {left:'Motif geometris',right:'Motif berbentuk segitiga, lingkaran, zigzag'},
+  {left:'Realisme',right:'Aliran lukis yang menggambarkan sesuai kenyataan'},
+  {left:'Kunyit',right:'Bahan alam yang menghasilkan warna kuning'},
+  {left:'Indigo',right:'Bahan alam yang menghasilkan warna biru'}
+];
+
+var selectedLeft = null;
+var matchedCount = 0;
+
+function initMatchingGame() {
+  matchedCount = 0;
+  selectedLeft = null;
+  var leftEl = document.getElementById('match-left');
+  var rightEl = document.getElementById('match-right');
+  var shuffled = matchingPairs.slice().sort(function(){ return Math.random() - 0.5; });
+
+  var lhtml = '';
+  for (var i = 0; i < matchingPairs.length; i++) {
+    lhtml += '<div class="match-item bg-white border-slate-200 rounded-xl p-3 text-center font-semibold text-slate-700 text-sm hover-lift" data-match-id="' + i + '" data-side="left" onclick="selectMatch(this)">' + matchingPairs[i].left + '</div>';
+  }
+  leftEl.innerHTML = lhtml;
+
+  var rhtml = '';
+  for (var k = 0; k < shuffled.length; k++) {
+    var origIdx = matchingPairs.findIndex(function(p){ return p.right === shuffled[k].right; });
+    rhtml += '<div class="match-item bg-white border-slate-200 rounded-xl p-3 text-center text-xs text-slate-600 hover-lift" data-match-id="' + origIdx + '" data-side="right" onclick="selectMatch(this)">' + shuffled[k].right + '</div>';
+  }
+  rightEl.innerHTML = rhtml;
+  updateMatchProgress();
+  document.getElementById('match-success').classList.add('hidden');
+}
+
+function selectMatch(el) {
+  if (el.classList.contains('matched')) return;
+  var side = el.getAttribute('data-side');
+  var matchId = el.getAttribute('data-match-id');
+
+  if (side === 'left') {
+    var leftItems = document.querySelectorAll('.match-item[data-side="left"]');
+    for (var i = 0; i < leftItems.length; i++) leftItems[i].classList.remove('selected');
+    el.classList.add('selected');
+    selectedLeft = {el: el, matchId: matchId};
+  } else if (side === 'right' && selectedLeft) {
+    if (selectedLeft.matchId === matchId) {
+      el.classList.add('matched');
+      selectedLeft.el.classList.add('matched');
+      selectedLeft.el.classList.remove('selected');
+      matchedCount++;
+      updateMatchProgress();
+      if (matchedCount === matchingPairs.length) {
+        document.getElementById('match-success').classList.remove('hidden');
+        createConfetti(document.getElementById('match-success'));
+      }
+    } else {
+      el.classList.add('wrong');
+      selectedLeft.el.classList.add('wrong');
+      var tempEl = selectedLeft.el;
+      setTimeout(function() {
+        el.classList.remove('wrong');
+        tempEl.classList.remove('wrong');
+        tempEl.classList.remove('selected');
+      }, 500);
+      selectedLeft = null;
+      return;
+    }
+    selectedLeft = null;
+  }
+}
+
+function updateMatchProgress() {
+  var pct = (matchedCount / matchingPairs.length) * 100;
+  document.getElementById('match-progress-bar').style.width = pct + '%';
+  document.getElementById('match-progress-text').textContent = matchedCount + ' dari ' + matchingPairs.length + ' pasang';
+}
+
+function resetMatching() { initMatchingGame(); }
+
+function createConfetti(container) {
+  var colors = ['#f43f5e','#8b5cf6','#3b82f6','#22c55e','#f59e0b','#06b6d4'];
+  for (var i = 0; i < 30; i++) {
+    var piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.5 + 's';
+    piece.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+    container.appendChild(piece);
+    setTimeout(function(p){ return function(){ if(p.parentNode) p.parentNode.removeChild(p); }; }(piece), 1500);
+  }
+}
+
+// ============================================================
+// KUIS
+// ============================================================
+var pgQuestions = [
+  {q:'Perspektif satu titik hilang menggunakan berapa titik hilang?',opts:['Satu titik','Dua titik','Tiga titik','Tanpa titik'],ans:0},
+  {q:'Ciri perspektif dua titik hilang adalah ....',opts:['Satu titik di tengah','Dua titik di kiri dan kanan garis horizon','Tanpa garis horizon','Titik hilang di bawah kertas'],ans:1},
+  {q:'Garis horizon pada gambar perspektif terletak di ....',opts:['Bagian atas kertas','Setinggi mata pengamat','Bagian bawah kertas','Di luar kertas'],ans:1},
+  {q:'Fungsi gambar ilustrasi adalah ....',opts:['Menghias ruangan saja','Menerangkan dan memperindah teks/cerita','Menggantikan tulisan','Menjual barang'],ans:1},
+  {q:'Jenis ilustrasi yang berupa gambar lucu dan berlebihan disebut ....',opts:['Komik','Vignette','Karikatur','Ilustrasi cerita'],ans:2},
+  {q:'Poster adalah media publikasi yang bertujuan untuk ....',opts:['Menghibur saja','Memberikan informasi kepada khalayak ramai','Mengganti buku','Menyimpan data'],ans:1},
+  {q:'Unsur warna pada lukisan suasana sore cenderung menggunakan ....',opts:['Warna biru dan hijau muda','Warna oranye, merah, dan coklat keemasan','Warna hitam dan putih','Warna biru tua dan ungu'],ans:1},
+  {q:'Ciri poster yang baik adalah ....',opts:['Menggunakan bahasa panjang','Menggunakan banyak warna tanpa aturan','Menggunakan slogan yang singkat dan menarik','Tidak perlu gambar'],ans:2},
+  {q:'Ukuran poster standar yang biasa digunakan adalah ....',opts:['A1 (594 × 841 mm)','A6 (105 × 148 mm)','A0 (841 × 1189 mm)','A8 (52 × 74 mm)'],ans:0},
+  {q:'Motif ragam hias berbentuk segitiga, lingkaran, dan zigzag termasuk motif ....',opts:['Flora','Fauna','Geometris','Figuratif'],ans:2}
+];
+
+var pgkQuestions = [
+  {q:'Pilih gambar yang sesuai dengan jenis perspektif yang benar:',opts:['Perspektif 1 titik → lorong/jalan lurus','Perspektif 2 titik → gedung dari sudut','Perspektif 1 titik → pemandangan tanpa titik hilang','Perspektif 2 titik → wajah manusia dari depan'],ans:[0,1]},
+  {q:'Langkah menggambar perspektif satu titik hilang yang benar:',opts:['Buat garis horizon','Tentukan satu titik hilang di garis horizon','Tarik garis dari sudut objek ke titik hilang','Langsung mewarnai tanpa garis bantu'],ans:[0,1,2]},
+  {q:'Unsur ilustrasi yang tepat untuk memperjelas cerita:',opts:['Gambar tokoh sesuai cerita','Warna yang mendukung suasana','Teks penjelasan','Garis-garis acak tanpa makna'],ans:[0,1,2]},
+  {q:'Kombinasi warna suasana yang tepat:',opts:['Pagi: kuning, biru muda, hijau muda','Siang: merah terang, jingga, putih','Sore: oranye, merah, coklat keemasan','Malam: biru tua, ungu, hitam'],ans:[0,2,3]},
+  {q:'Unsur penting dalam poster:',opts:['Gambar/ilustrasi','Teks/slogan','Warna yang kontras','Harga barang yang dijual'],ans:[0,1,2]},
+  {q:'Slogan yang tepat untuk poster tema lingkungan:',opts:['"Buanglah sampah pada tempatnya!"','"Ayo beli barang mahal!"','"Jagalah kelestarian alam!"','"Hemat air, hemat energi!"'],ans:[0,2,3]},
+  {q:'Motif flora, fauna, dan geometris yang benar:',opts:['Flora: bunga, daun, sulur','Fauna: burung, ikan, kupu-kupu','Geometris: kawung, tumpal, meander','Flora: segitiga, lingkaran, persegi'],ans:[0,1,2]},
+  {q:'Pola pengulangan motif yang benar:',opts:['Motif berulang secara teratur','Motif dibuat acak tanpa pola','Motif simetris kiri-kanan','Motif berulang membentuk garis'],ans:[0,2,3]},
+  {q:'Keunikan ragam hias daerah:',opts:['Jawa: batik parang, kawung','Bali: ukiran bunga teratai','Papua: motif asmat','Semua daerah memiliki motif yang sama'],ans:[0,1,2]},
+  {q:'Jenis aliran seni lukis:',opts:['Realisme: melukis sesuai kenyataan','Ekspresionisme: mengekspresikan emosi','Abstrak: tidak menggambarkan objek nyata','Semua aliran sama saja'],ans:[0,1,2]}
+];
+
+var tfQuestions = [
+  {q:'Perspektif satu titik hilang menggunakan dua titik hilang pada garis horizon.',ans:false,explanation:'Salah. Perspektif satu titik hilang menggunakan SATU titik hilang, bukan dua.'},
+  {q:'Poster yang baik menggunakan bahasa yang singkat, jelas, dan menarik.',ans:true,explanation:'Benar. Poster yang baik harus menggunakan bahasa singkat, jelas, dan menarik.'},
+  {q:'Motif geometris adalah motif berbentuk tumbuhan dan bunga.',ans:false,explanation:'Salah. Motif geometris berbentuk bangun geometris (segitiga, lingkaran, dll). Motif tumbuhan adalah motif flora.'},
+  {q:'Aliran realisme melukis objek sesuai kenyataan/asli.',ans:true,explanation:'Benar. Realisme adalah aliran yang menggambarkan objek secara detail dan mirip aslinya.'},
+  {q:'Kunyit menghasilkan warna biru saat digunakan sebagai pewarna alami.',ans:false,explanation:'Salah. Kunyit menghasilkan warna KUNING. Yang menghasilkan biru adalah indigo/tom.'}
+];
+
+var isianQuestions = [
+  {q:'Titik pada garis horizon tempat semua garis sejajar tampak bertemu disebut <strong>__________</strong>.',ans:['titik hilang','titik lenyap']},
+  {q:'Gambar yang berfungsi untuk menerangkan atau memperindah teks disebut <strong>__________</strong>.',ans:['ilustrasi','gambar ilustrasi']},
+  {q:'Motif geometris yang berbentuk seperti ketupat/belah ketupat disebut motif <strong>__________</strong>.',ans:['kawung']},
+  {q:'Aliran seni lukis yang mengekspresikan emosi pelukis disebut <strong>__________</strong>.',ans:['ekspresionisme','ekspresionis']},
+  {q:'Bahan alam kunyit menghasilkan warna <strong>__________</strong>.',ans:['kuning']}
+];
+
+var quizState = {};
+var quizCorrect = 0;
+var quizWrong = 0;
+var quizAnsweredCount = 0;
+var totalQuizQuestions = pgQuestions.length + pgkQuestions.length + tfQuestions.length + isianQuestions.length;
+
+function renderQuiz() {
+  // PG
+  var pgContainer = document.getElementById('quiz-pg-questions');
+  var pgHTML = '';
+  var labels = ['A','B','C','D'];
+  for (var i = 0; i < pgQuestions.length; i++) {
+    var q = pgQuestions[i];
+    pgHTML += '<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="pg-q-' + i + '">';
+    pgHTML += '<p class="font-bold text-slate-800 mb-3"><span class="bg-rose-100 text-rose-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">' + (i+1) + '</span>' + q.q + '</p>';
+    pgHTML += '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">';
+    for (var oi = 0; oi < q.opts.length; oi++) {
+      pgHTML += '<button onclick="checkQuizPG(' + i + ',' + oi + ',this)" class="quiz-option text-left px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-medium hover:border-rose-300 hover:bg-rose-50 transition-all duration-200" data-qi="' + i + '" data-oi="' + oi + '"><span class="font-bold text-rose-600 mr-2">' + labels[oi] + '.</span>' + q.opts[oi] + '</button>';
+    }
+    pgHTML += '</div><p class="mt-2 text-sm font-bold hidden" id="pg-fb-' + i + '"></p></div>';
+  }
+  pgContainer.innerHTML = pgHTML;
+
+  // PG Kompleks
+  var pgkContainer = document.getElementById('quiz-pgk-questions');
+  var pgkHTML = '';
+  for (var pi = 0; pi < pgkQuestions.length; pi++) {
+    var pq = pgkQuestions[pi];
+    pgkHTML += '<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="pgk-q-' + pi + '">';
+    pgkHTML += '<p class="font-bold text-slate-800 mb-3"><span class="bg-indigo-100 text-indigo-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">' + (pi+1) + '</span>' + pq.q + '</p>';
+    pgkHTML += '<p class="text-xs text-indigo-500 mb-2">💡 Pilih semua jawaban yang benar</p>';
+    pgkHTML += '<div class="space-y-2">';
+    for (var oi2 = 0; oi2 < pq.opts.length; oi2++) {
+      pgkHTML += '<div onclick="togglePGKOption(' + pi + ',' + oi2 + ',this)" class="pgk-option flex items-center gap-3 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-700 font-medium" data-pgk-i="' + pi + '" data-pgk-o="' + oi2 + '"><span class="check-box"></span>' + pq.opts[oi2] + '</div>';
+    }
+    pgkHTML += '</div>';
+    pgkHTML += '<button onclick="submitPGK(' + pi + ')" class="mt-3 bg-indigo-600 text-white font-semibold px-5 py-2 rounded-xl hover:bg-indigo-700 transition-colors">Submit Jawaban</button>';
+    pgkHTML += '<p class="mt-2 text-sm font-bold hidden" id="pgk-fb-' + pi + '"></p></div>';
+  }
+  pgkContainer.innerHTML = pgkHTML;
+
+  // True/False
+  var tfContainer = document.getElementById('quiz-tf-questions');
+  var tfHTML = '';
+  for (var ti = 0; ti < tfQuestions.length; ti++) {
+    var tq = tfQuestions[ti];
+    tfHTML += '<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="tf-q-' + ti + '">';
+    tfHTML += '<p class="font-bold text-slate-800 mb-3"><span class="bg-emerald-100 text-emerald-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">' + (ti+1) + '</span>' + tq.q + '</p>';
+    tfHTML += '<div class="flex gap-3">';
+    tfHTML += '<button onclick="checkTF(' + ti + ',true,this)" class="tf-option flex-1 py-3 rounded-xl border-2 border-emerald-300 text-emerald-700 font-bold hover:bg-emerald-50 transition-all">✅ Benar</button>';
+    tfHTML += '<button onclick="checkTF(' + ti + ',false,this)" class="tf-option flex-1 py-3 rounded-xl border-2 border-red-300 text-red-700 font-bold hover:bg-red-50 transition-all">❌ Salah</button>';
+    tfHTML += '</div><p class="mt-2 text-sm hidden" id="tf-fb-' + ti + '"></p></div>';
+  }
+  tfContainer.innerHTML = tfHTML;
+
+  // Isian
+  var isianContainer = document.getElementById('quiz-isian-questions');
+  var isianHTML = '';
+  for (var si = 0; si < isianQuestions.length; si++) {
+    var sq = isianQuestions[si];
+    isianHTML += '<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-5" id="isian-q-' + si + '">';
+    isianHTML += '<p class="font-bold text-slate-800 mb-3"><span class="bg-amber-100 text-amber-700 rounded-full w-7 h-7 inline-flex items-center justify-center text-sm font-bold mr-2">' + (si+1) + '</span>' + sq.q + '</p>';
+    isianHTML += '<div class="flex gap-3">';
+    isianHTML += '<input type="text" id="isian-input-' + si + '" placeholder="Ketik jawabanmu..." class="flex-1 border-2 border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:border-indigo-400 focus:outline-none transition-colors" onkeypress="if(event.key===\'Enter\')checkQuizIsian(' + si + ')">';
+    isianHTML += '<button onclick="checkQuizIsian(' + si + ')" class="bg-indigo-600 text-white font-semibold px-5 py-3 rounded-xl hover:bg-indigo-700 transition-colors whitespace-nowrap">Cek ✓</button>';
+    isianHTML += '</div><p class="mt-2 text-sm font-bold hidden" id="isian-fb-' + si + '"></p></div>';
+  }
+  isianContainer.innerHTML = isianHTML;
+}
+
+function checkQuizPG(qIdx, oIdx, btnEl) {
+  var key = 'pg_' + qIdx;
+  if (quizState[key] !== undefined) return;
+  quizState[key] = oIdx;
+  quizAnsweredCount++;
+
+  var correct = pgQuestions[qIdx].ans;
+  var allBtns = document.querySelectorAll('.quiz-option[data-qi="' + qIdx + '"]');
+  var fbEl = document.getElementById('pg-fb-' + qIdx);
+
+  for (var i = 0; i < allBtns.length; i++) {
+    var btn = allBtns[i];
+    var oi = parseInt(btn.getAttribute('data-oi'));
+    btn.classList.add('disabled');
+    btn.disabled = true;
+    if (oi === correct) {
+      btn.classList.remove('border-slate-200','hover:border-rose-300','hover:bg-rose-50');
+      btn.classList.add('bg-emerald-100','border-emerald-500','text-emerald-800');
+    }
+    if (oi === oIdx && oIdx !== correct) {
+      btn.classList.add('bg-red-100','border-red-500','text-red-800');
+    }
+  }
+
+  if (oIdx === correct) {
+    quizCorrect++;
+    fbEl.textContent = '✅ Benar!';
+    fbEl.className = 'mt-2 text-sm font-bold text-emerald-600';
+  } else {
+    quizWrong++;
+    fbEl.textContent = '❌ Salah. Jawaban: ' + pgQuestions[qIdx].opts[correct];
+    fbEl.className = 'mt-2 text-sm font-bold text-red-600';
+  }
+  fbEl.classList.remove('hidden');
+  updateQuizProgress();
+}
+
+function togglePGKOption(qIdx, oIdx, el) {
+  var key = 'pgk_' + qIdx;
+  if (quizState[key] !== undefined) return;
+  el.classList.toggle('selected');
+  var cb = el.querySelector('.check-box');
+  if (el.classList.contains('selected')) {
+    cb.innerHTML = '<svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>';
+    cb.classList.add('checked');
+  } else {
+    cb.innerHTML = '';
+    cb.classList.remove('checked');
+  }
+}
+
+function submitPGK(qIdx) {
+  var key = 'pgk_' + qIdx;
+  if (quizState[key] !== undefined) return;
+  var selected = [];
+  var selectedEls = document.querySelectorAll('.pgk-option[data-pgk-i="' + qIdx + '"].selected');
+  for (var i = 0; i < selectedEls.length; i++) {
+    selected.push(parseInt(selectedEls[i].getAttribute('data-pgk-o')));
+  }
+  quizState[key] = selected;
+  quizAnsweredCount++;
+
+  var correct = pgkQuestions[qIdx].ans;
+  var isCorrect = selected.length === correct.length && selected.every(function(v){ return correct.indexOf(v) !== -1; });
+
+  var allOpts = document.querySelectorAll('.pgk-option[data-pgk-i="' + qIdx + '"]');
+  for (var j = 0; j < allOpts.length; j++) {
+    allOpts[j].classList.add('disabled');
+    var oi = parseInt(allOpts[j].getAttribute('data-pgk-o'));
+    if (correct.indexOf(oi) !== -1) {
+      allOpts[j].classList.add('bg-emerald-100','border-emerald-500','text-emerald-800');
+    }
+    if (selected.indexOf(oi) !== -1 && correct.indexOf(oi) === -1) {
+      allOpts[j].classList.add('bg-red-100','border-red-500','text-red-800');
+    }
+  }
+
+  var fbEl = document.getElementById('pgk-fb-' + qIdx);
+  if (isCorrect) {
+    quizCorrect++;
+    fbEl.textContent = '✅ Benar!';
+    fbEl.className = 'mt-2 text-sm font-bold text-emerald-600';
+  } else {
+    quizWrong++;
+    var correctTexts = correct.map(function(i){ return pgkQuestions[qIdx].opts[i]; });
+    fbEl.textContent = '❌ Salah. Jawaban yang benar: ' + correctTexts.join(', ');
+    fbEl.className = 'mt-2 text-sm font-bold text-red-600';
+  }
+  fbEl.classList.remove('hidden');
+  updateQuizProgress();
+}
+
+function checkTF(idx, userAnswer, btnEl) {
+  var key = 'tf_' + idx;
+  if (quizState[key] !== undefined) return;
+  quizState[key] = userAnswer;
+  quizAnsweredCount++;
+
+  var correct = tfQuestions[idx].ans;
+  var fbEl = document.getElementById('tf-fb-' + idx);
+  var allBtns = btnEl.parentElement.querySelectorAll('.tf-option');
+
+  for (var i = 0; i < allBtns.length; i++) allBtns[i].classList.add('disabled');
+
+  if (userAnswer === correct) {
+    quizCorrect++;
+    btnEl.classList.add('bg-emerald-100','border-emerald-500');
+    fbEl.innerHTML = '✅ Benar! <span class="text-slate-600 font-normal">' + tfQuestions[idx].explanation + '</span>';
+    fbEl.className = 'mt-2 text-sm font-bold text-emerald-600';
+  } else {
+    quizWrong++;
+    btnEl.classList.add('bg-red-100','border-red-500');
+    fbEl.innerHTML = ' Salah. <span class="text-slate-600 font-normal">' + tfQuestions[idx].explanation + '</span>';
+    fbEl.className = 'mt-2 text-sm font-bold text-red-600';
+  }
+  fbEl.classList.remove('hidden');
+  updateQuizProgress();
+}
+
+function checkQuizIsian(idx) {
+  var key = 'isian_' + idx;
+  if (quizState[key] !== undefined) return;
+  var input = document.getElementById('isian-input-' + idx);
+  var userAnswer = input.value.trim().toLowerCase();
+  var correctAnswers = isianQuestions[idx].ans;
+  var fbEl = document.getElementById('isian-fb-' + idx);
+
+  quizState[key] = userAnswer;
+  quizAnsweredCount++;
+  input.disabled = true;
+
+  var isCorrect = false;
+  for (var i = 0; i < correctAnswers.length; i++) {
+    var ca = correctAnswers[i].toLowerCase();
+    if (userAnswer === ca || ca.indexOf(userAnswer) !== -1 || userAnswer.indexOf(ca) !== -1) {
+      isCorrect = true;
+      break;
+    }
+  }
+
+  if (isCorrect && userAnswer !== '') {
+    quizCorrect++;
+    input.classList.add('bg-emerald-50','border-emerald-500','text-emerald-700');
+    fbEl.textContent = '✅ Benar!';
+    fbEl.className = 'mt-2 text-sm font-bold text-emerald-600';
+  } else {
+    quizWrong++;
+    input.classList.add('bg-red-50','border-red-500','text-red-700');
+    fbEl.textContent = ' Jawaban yang benar: ' + isianQuestions[idx].ans[0];
+    fbEl.className = 'mt-2 text-sm font-bold text-red-600';
+  }
+  fbEl.classList.remove('hidden');
+  updateQuizProgress();
+}
+
+function updateQuizProgress() {
+  var pct = (quizAnsweredCount / totalQuizQuestions) * 100;
+  document.getElementById('quiz-progress-bar').style.width = pct + '%';
+  document.getElementById('quiz-progress-text').textContent = quizAnsweredCount + ' dari ' + totalQuizQuestions + ' soal terjawab';
+  document.getElementById('quiz-correct-count').textContent = quizCorrect;
+  document.getElementById('quiz-wrong-count').textContent = quizWrong;
+  if (quizAnsweredCount === totalQuizQuestions) showFinalScore();
+}
+
+function showFinalScore() {
+  var pct = Math.round((quizCorrect / totalQuizQuestions) * 100);
+  var scoreEl = document.getElementById('final-score');
+  var emojiEl = document.getElementById('final-emoji');
+  var textEl = document.getElementById('final-score-text');
+  var msgEl = document.getElementById('final-score-message');
+
+  textEl.textContent = quizCorrect + ' / ' + totalQuizQuestions + ' (' + pct + '%)';
+
+  if (pct === 100) { emojiEl.textContent = '🏆'; msgEl.textContent = 'SEMPURNA! Kamu luar biasa!'; }
+  else if (pct >= 80) { emojiEl.textContent = '🌟'; msgEl.textContent = 'Hebat! Kamu sudah sangat memahami materi!'; }
+  else if (pct >= 60) { emojiEl.textContent = '👍'; msgEl.textContent = 'Bagus! Terus berlatih!'; }
+  else if (pct >= 40) { emojiEl.textContent = '💪'; msgEl.textContent = 'Cukup baik! Pelajari kembali materinya!'; }
+  else { emojiEl.textContent = '📖'; msgEl.textContent = 'Jangan menyerah! Baca ulang materi!'; }
+
+  scoreEl.classList.remove('hidden');
+  scoreEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  quizState = {};
+  quizCorrect = 0;
+  quizWrong = 0;
+  quizAnsweredCount = 0;
+  document.getElementById('final-score').classList.add('hidden');
+  renderQuiz();
+  updateQuizProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============================================================
+// ESSAY
+// ============================================================
+var essayData = [
+  {q:'Jelaskan langkah-langkah menggambar perspektif satu titik hilang!',
+   answer:'<strong>Langkah Menggambar Perspektif Satu Titik Hilang:</strong><br><br>1. <strong>Buat garis horizon</strong> horizontal di tengah kertas<br>2. <strong>Tentukan satu titik hilang</strong> (titik pusat) di garis horizon<br>3. <strong>Gambar bentuk depan objek</strong> (persegi/kotak) di bawah atau di atas garis horizon<br>4. <strong>Tarik garis dari sudut objek</strong> menuju titik hilang (garis bantu)<br>5. <strong>Buat garis vertikal/horizontal</strong> untuk membentuk kedalaman/ketebalan<br>6. <strong>Tebalkan garis</strong> yang menjadi bentuk akhir dan hapus garis bantu<br>7. <strong>Beri arsiran/warna</strong> untuk memperkuat kesan 3 dimensi'},
+  {q:'Jelaskan pengertian dan manfaat warna dari bahan alam!',
+   answer:'<strong>Pengertian Warna dari Bahan Alam:</strong><br><br>Warna dari bahan alam adalah <em>zat pewarna yang diperoleh dari bahan-bahan alami</em> seperti tumbuhan (daun, bunga, akar, kulit kayu), buah, dan mineral alam.<br><br><strong>Manfaat Pewarna Alam:</strong><br>• <strong>Ramah lingkungan:</strong> tidak mencemari lingkungan<br>• <strong>Aman untuk kesehatan:</strong> tidak mengandung bahan kimia berbahaya<br>• <strong>Warna unik &amp; natural:</strong> menghasilkan warna khas dan alami<br>• <strong>Melestarikan tradisi:</strong> menjaga kearifan lokal<br>• <strong>Ekonomis:</strong> bahan mudah didapat dari alam sekitar'},
+  {q:'Sebutkan contoh bahan alam dan warna yang dihasilkan!',
+   answer:'<strong>Contoh Bahan Alam dan Warna yang Dihasilkan:</strong><br><br><table class="w-full text-sm border-collapse"><thead><tr class="bg-emerald-100"><th class="p-2 border text-left">Bahan Alam</th><th class="p-2 border text-left">Warna</th></tr></thead><tbody><tr><td class="p-2 border">Kunyit</td><td class="p-2 border">Kuning</td></tr><tr><td class="p-2 border">Indigo / Daun Tom</td><td class="p-2 border">Biru</td></tr><tr><td class="p-2 border">Daun Suji / Pandan</td><td class="p-2 border">Hijau</td></tr><tr><td class="p-2 border">Kayu Secang</td><td class="p-2 border">Merah</td></tr><tr><td class="p-2 border">Kulit Manggis</td><td class="p-2 border">Coklat</td></tr><tr><td class="p-2 border">Arang / jelaga</td><td class="p-2 border">Hitam</td></tr></tbody></table>'},
+  {q:'Jelaskan langkah-langkah membuat poster!',
+   answer:'<strong>Langkah Membuat Poster:</strong><br><br>1. <strong>Tentukan tema dan tujuan</strong> poster (lingkungan, kesehatan, pendidikan, dll.)<br>2. <strong>Buat slogan/kalimat</strong> yang singkat, padat, dan menarik<br>3. <strong>Buat sketsa tata letak (layout)</strong> poster di kertas<br>4. <strong>Gambar ilustrasi</strong> yang mendukung pesan/slogan<br>5. <strong>Tulis teks/slogan</strong> dengan huruf yang jelas dan mudah dibaca<br>6. <strong>Beri warna</strong> yang kontras dan menarik perhatian<br>7. <strong>Rapikan dan finishing</strong>: perbaiki detail, tambahkan border jika perlu<br>8. <strong>Tempelkan di tempat strategis</strong> yang banyak dilihat orang'},
+  {q:'Jelaskan cara berkarya dengan bahan alam!',
+   answer:'<strong>Cara Berkarya dengan Bahan Alam:</strong><br><br>1. <strong>Tentukan karya</strong> yang ingin dibuat (kolase, mozaik, anyaman, ukiran, dll.)<br>2. <strong>Kumpulkan bahan alam</strong> yang dibutuhkan (daun, biji, kulit kerang, kayu, bambu, sabut kelapa)<br>3. <strong>Bersihkan dan siapkan bahan:</strong> keringkan daun, potong kayu, rendam sabut kelapa<br>4. <strong>Buat sketsa/desain</strong> karya yang akan dibuat<br>5. <strong>Rakit/susun bahan alam</strong> sesuai desain (lem, anyam, ukir, susun)<br>6. <strong>Finishing:</strong> beri pelapis (vernis/lak) jika diperlukan<br>7. <strong>Jemur/keringkan</strong> hingga benar-benar kering<br><br><strong>Contoh karya:</strong> kolase daun kering, mozaik biji-bijian, anyaman bambu, ukiran kayu mini.'}
+];
+
+function renderEssay() {
+  var container = document.getElementById('essay-questions-container');
+  var html = '';
+  for (var i = 0; i < essayData.length; i++) {
+    var q = essayData[i];
+    html += '<div class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 hover-lift">';
+    html += '<div class="flex items-start gap-3 mb-4">';
+    html += '<span class="bg-indigo-100 text-indigo-700 rounded-xl w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">E' + (i+1) + '</span>';
+    html += '<p class="font-bold text-slate-800 text-lg leading-relaxed">' + q.q + '</p></div>';
+    html += '<textarea class="w-full border-2 border-slate-200 rounded-xl p-4 text-slate-700 text-sm min-h-[100px] focus:border-indigo-400 focus:outline-none transition-colors resize-y" placeholder="Tulis jawabanmu di sini..." rows="4"></textarea>';
+    html += '<button onclick="toggleEssayAnswer(' + i + ')" id="essay-btn-' + i + '" class="mt-4 flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-indigo-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md hover:from-indigo-600 hover:to-indigo-700 transition-all hover-lift">';
+    html += '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> Lihat Kunci Jawaban</button>';
+    html += '<div id="essay-answer-' + i + '" class="essay-answer">';
+    html += '<div class="bg-gradient-to-r from-rose-50 to-indigo-50 border-2 border-indigo-200 rounded-xl p-5 mt-3">';
+    html += '<div class="flex items-center gap-2 mb-3"><span class="bg-indigo-500 text-white px-3 py-1 rounded-full text-xs font-bold">KUNCI JAWABAN</span></div>';
+    html += '<p class="text-sm text-slate-800 leading-relaxed">' + q.answer + '</p></div></div></div>';
+  }
+  container.innerHTML = html;
+}
+
+function toggleEssayAnswer(idx) {
+  var answerEl = document.getElementById('essay-answer-' + idx);
+  var btnEl = document.getElementById('essay-btn-' + idx);
+  if (answerEl.classList.contains('show')) {
+    answerEl.classList.remove('show');
+    btnEl.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> Lihat Kunci Jawaban';
+  } else {
+    answerEl.classList.add('show');
+    btnEl.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg> Sembunyikan Kunci Jawaban';
+  }
+}
+
+// ============================================================
+// INITIALIZE
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+  updateFlashcard();
+  initMatchingGame();
+  renderQuiz();
+  renderEssay();
+});
+</script>
 </body>
 </html>
 
